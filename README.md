@@ -11,3 +11,9 @@ On the page, have two tabs:
 Once completed create a GitHub repository and share the link with us so that we can have a look.
 
 Please send the results to richard.rajwayi@gictsystems.com
+
+## How I went about the task
+
+- Add edit + delete btns to DT [link](https://www.r-bloggers.com/2021/01/adding-action-buttons-in-rows-of-dt-data-table-in-r-shiny/)
+
+- Handle http requests using [httr](https://cran.r-project.org/web/packages/httr/vignettes/quickstart.html)
