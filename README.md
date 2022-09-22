@@ -18,6 +18,8 @@ Please send the results to richard.rajwayi@gictsystems.com
 
 - Handle http requests using [httr](https://cran.r-project.org/web/packages/httr/vignettes/quickstart.html)
 
+- GET and POST requests:
+
 ```r
 library(httr)
 
@@ -49,3 +51,6 @@ content(r)$Message
 message_for_status(r)
 
 ```
+
+- Field validation
+    - https://merlinoa.github.io/shinyFeedback/
