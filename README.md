@@ -17,3 +17,35 @@ Please send the results to richard.rajwayi@gictsystems.com
 - Add edit + delete btns to DT [link](https://www.r-bloggers.com/2021/01/adding-action-buttons-in-rows-of-dt-data-table-in-r-shiny/)
 
 - Handle http requests using [httr](https://cran.r-project.org/web/packages/httr/vignettes/quickstart.html)
+
+```r
+library(httr)
+
+# tab2:
+getdata <- GET(
+  url='http://developers.gictsystems.com/api/dummy/items/', 
+  add_headers(Authorization="Bearer ALDJAK23423JKSLAJAF23423J23SAD3")
+)
+
+status_code(getdata)
+
+content(getdata)
+
+# tab1:
+r <- POST(
+  url = 'http://developers.gictsystems.com/api/dummy/submit/', 
+  body = list(
+    fullnames = 'ken mwav', 
+    email = 'kenmwav6@gmail.com', 
+    phone = '+254721231292', 
+    address = 'po box 195'
+  ), 
+  encode = 'json'
+)
+
+r$status_code
+content(r)
+content(r)$Message
+message_for_status(r)
+
+```
