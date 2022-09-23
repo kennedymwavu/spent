@@ -18,37 +18,92 @@ Please send the results to richard.rajwayi@gictsystems.com
 
 - Handle http requests using [httr](https://cran.r-project.org/web/packages/httr/vignettes/quickstart.html)
 
-- GET and POST requests:
+- GET and POST requests R shiny POC:
 
 ```r
+library(shiny)
 library(httr)
 
-# tab2:
-getdata <- GET(
-  url='http://developers.gictsystems.com/api/dummy/items/', 
-  add_headers(Authorization="Bearer ALDJAK23423JKSLAJAF23423J23SAD3")
-)
-
-status_code(getdata)
-
-content(getdata)
-
-# tab1:
-r <- POST(
-  url = 'http://developers.gictsystems.com/api/dummy/submit/', 
-  body = list(
-    fullnames = 'ken mwav', 
-    email = 'kenmwav6@gmail.com', 
-    phone = '+254721231292', 
-    address = 'po box 195'
+ui <- navbarPage(
+  title = 'GICT Task', 
+  
+  tabPanel(
+    title = 'POST', 
+    
+    tags$h1('My title'), 
+    textInput(
+      inputId = 'fullnames', 
+      label = 'Full Names',
+      placeholder = 'eg. John Wick'
+    ), 
+    
+    textInput(
+      inputId = 'email', 
+      label = 'Email:', 
+      placeholder = 'eg. you@email.com'
+    ), 
+    
+    textInput(
+      inputId = 'phone', 
+      label = 'Phone Number:', 
+      placeholder = 'eg. +2547123456'
+    ), 
+    
+    textInput(
+      inputId = 'address', 
+      label = 'Address', 
+      placeholder = 'eg. po box 256'
+    ), 
+    
+    actionButton(
+      inputId = 'submit', 
+      label = 'Submit'
+    )
   ), 
-  encode = 'json'
+  
+  tabPanel(
+    title = 'GET', 
+    
+    actionButton(
+      inputId = 'get', 
+      label = 'GET'
+    )
+  )
 )
 
-r$status_code
-content(r)
-content(r)$Message
-message_for_status(r)
+server <- function(input, output, session) {
+  observeEvent(input$submit, {
+    r <- POST(
+      url = 'http://developers.gictsystems.com/api/dummy/submit/', 
+      body = list(
+        fullnames = input$fullnames, 
+        email = input$email, 
+        phone = input$phone, 
+        address = input$address
+      ), 
+      encode = 'json'
+    )
+    
+    print(r$status_code)
+    print(content(r))
+    print(content(r)$Message)
+    print(message_for_status(r))
+  })
+  
+  observeEvent(input$get, {
+    # tab2:
+    getdata <- GET(
+      url='http://developers.gictsystems.com/api/dummy/items/', 
+      add_headers(Authorization="Bearer ALDJAK23423JKSLAJAF23423J23SAD3")
+    )
+    
+    print(status_code(getdata))
+    
+    print(content(getdata))
+  })
+}
+
+shinyApp(ui, server)
 
 ```
 
