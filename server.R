@@ -7,15 +7,44 @@ server <- function(input, output, session) {
   
   post_server(id = 'post', post_url = rv_req_details$post_url)
   
-  observeEvent(input$get, {
-    # tab2:
-    getdata <- httr::GET(
+  # autoinvalidator to reload table every 10 seconds:
+  autoinvalidator <- reactiveTimer(intervalMs = 10 * 1000, session = session)
+  
+  rv_table <- reactiveVal(value = NULL)
+  
+  observeEvent(autoinvalidator(), {
+    # GET request:
+    r <- httr::GET(
       url = rv_req_details$get_url, 
       httr::add_headers(Authorization = rv_req_details$header_authorization)
     )
     
-    print(status_code(getdata))
+    newtable <- data.frame(
+      do.call(
+        what = 'rbind', 
+        args = httr::content(r)
+      )
+    )
     
-    print(content(getdata))
+    rv_table(newtable)
+  })
+  
+  output$table <- DT::renderDT({
+    DT::datatable(
+      data = rv_table(), 
+      rownames = FALSE, 
+      extensions = c("Buttons"),
+      options = list(
+        scrollX = TRUE,
+        dom = 'Bftip', 
+        buttons = list(
+          list(
+            extend = "excel",
+            text = "Download",
+            title = paste0("gict-get-data-", Sys.Date())
+          )
+        )
+      )
+    )
   })
 }

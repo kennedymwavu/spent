@@ -18,10 +18,7 @@ ui <- shiny::tagList(
     tabPanel(
       title = 'GET', 
       
-      actionButton(
-        inputId = 'get', 
-        label = 'GET'
-      )
+      DT::DTOutput(outputId = 'table')
     )
   )
 )
