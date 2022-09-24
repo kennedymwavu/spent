@@ -27,12 +27,18 @@ server <- function(input, output, session) {
           progressBar = TRUE, 
           position = 'top-center'
         )
+        
+        # reset loading btn:
+        shinyFeedback::resetLoadingButton(inputId = 'submit', session = session)
       }, 
       
       error = function(cond) {
         shinytoastr::toastr_error(
           message = msg
         )
+        
+        # reset loading btn:
+        shinyFeedback::resetLoadingButton(inputId = 'submit', session = session)
         
         # print the error on console for debugging:
         print(cond)

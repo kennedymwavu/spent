@@ -41,9 +41,10 @@ ui <- shiny::tagList(
         # placeholder = 'eg. po box 256'
       ), 
       
-      actionButton(
+      shinyFeedback::loadingButton(
         inputId = 'submit', 
-        label = 'Submit'
+        label = 'Submit', 
+        loadingLabel = 'Submitting...'
       )
     ), 
     
