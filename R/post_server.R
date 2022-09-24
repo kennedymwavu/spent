@@ -70,6 +70,20 @@ post_server <- function(id, post_url) {
           }
         )
       })
+      
+      # input validation----
+      # 1. Create an InputValidator object:
+      iv <- shinyvalidate::InputValidator$new()
+      
+      # 2. Add validation rules
+      iv$add_rule('fullnames', shinyvalidate::sv_required())
+      iv$add_rule('email', shinyvalidate::sv_required())
+      iv$add_rule('email', shinyvalidate::sv_email())
+      iv$add_rule('phone', shinyvalidate::sv_required())
+      iv$add_rule('address', shinyvalidate::sv_required())
+      
+      # 3. Start displaying errors in the UI
+      iv$enable()
     }
   )
 }

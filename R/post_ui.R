@@ -34,7 +34,6 @@ post_ui <- function(id) {
       inputId = ns('address'), 
       label = 'Address', 
       value = 'po box 256'
-      # placeholder = 'eg. po box 256'
     ), 
     
     shinyFeedback::loadingButton(
