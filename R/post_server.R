@@ -10,6 +10,27 @@ post_server <- function(id, post_url) {
     id = id, 
     module = function(input, output, session) {
       observeEvent(input$submit, {
+        # Start displaying errors in the UI:
+        iv$enable()
+        
+        # first make sure all inputs are supplied:
+        if (!isTruthy(iv$is_valid())) {
+          # show warning:
+          shinytoastr::toastr_warning(
+            message = 'Please make sure all inputs are valid', 
+            title = 'Validation Error'
+          )
+          
+          # reset loading btn:
+          shinyFeedback::resetLoadingButton(
+            inputId = 'submit', 
+            session = session
+          )
+          
+          return(NULL)
+        }
+        
+        # if all is well, continue:
         tryCatch(
           expr = {
             r <- httr::POST(
@@ -81,9 +102,6 @@ post_server <- function(id, post_url) {
       iv$add_rule('email', shinyvalidate::sv_email())
       iv$add_rule('phone', shinyvalidate::sv_required())
       iv$add_rule('address', shinyvalidate::sv_required())
-      
-      # 3. Start displaying errors in the UI
-      iv$enable()
     }
   )
 }
