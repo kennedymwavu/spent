@@ -13,35 +13,40 @@ server <- function(input, output, session) {
           encode = 'json'
         )
         
+        # get message/content returned by the request:
+        msg <- httr::content(r, as = 'raw') |> rawToChar()
+        
         # Throw error or warning when necessary:
         stop_for_status(r)
         warn_for_status(r)
         
         # If okay, show user success:
         shinytoastr::toastr_success(
-          message = httr::content(r)$Message, 
-          title = 'Success!'
+          message = httr::content(r)$Message,
+          title = 'Success!', 
+          progressBar = TRUE, 
+          position = 'top-center'
         )
       }, 
       
       error = function(cond) {
         shinytoastr::toastr_error(
-          message = httr::content(r)$Message, 
-          title = paste('HTTP Error', r$status_code)
+          message = msg
         )
+        
+        # print the error on console for debugging:
+        print(cond)
       }, 
       
       warning = function(cond) {
         shinytoastr::toastr_warning(
-          message = httr::content(r)$Message
+          message = msg
         )
+        
+        # print warning on console for debugging:
+        print(cond)
       }
     )
-    
-    print(r$status_code)
-    print(content(r))
-    # print(content(r)$Message)
-    # print(message_for_status(r))
   })
   
   observeEvent(input$get, {
