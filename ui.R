@@ -12,40 +12,7 @@ ui <- shiny::tagList(
     tabPanel(
       title = 'POST', 
       
-      tags$h1('My title'), 
-      textInput(
-        inputId = 'fullnames', 
-        label = 'Full Names',
-        value = 'John Wick'
-        # placeholder = 'eg. John Wick'
-      ), 
-      
-      textInput(
-        inputId = 'email', 
-        label = 'Email:', 
-        value = 'myemail@email.com'
-        # placeholder = 'eg. you@email.com'
-      ), 
-      
-      textInput(
-        inputId = 'phone', 
-        label = 'Phone Number:', 
-        value = '+254712345672'
-        # placeholder = 'eg. +254712345672'
-      ), 
-      
-      textInput(
-        inputId = 'address', 
-        label = 'Address', 
-        value = 'po box 256'
-        # placeholder = 'eg. po box 256'
-      ), 
-      
-      shinyFeedback::loadingButton(
-        inputId = 'submit', 
-        label = 'Submit', 
-        loadingLabel = 'Submitting...'
-      )
+      post_ui(id = 'post')
     ), 
     
     tabPanel(
