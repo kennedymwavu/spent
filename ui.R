@@ -73,7 +73,12 @@ ui <- bootstrapPage(
           class = 'container', 
           style = 'margin-top: 50px;', 
           
-          DT::DTOutput(outputId = 'table', height = '500px')
+          DT::DTOutput(outputId = 'table', height = '500px') |> 
+            shinycssloaders::withSpinner(
+              type = 2, 
+              color.background = 'white', 
+              hide.ui = FALSE
+            )
         )
       )
     )
