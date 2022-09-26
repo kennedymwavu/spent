@@ -24,6 +24,12 @@ get_server <- function(id, get_url, header_authorization) {
         newtable <- lapply(httr::content(r), as.data.frame) |> 
           do.call(what = 'rbind')
         
+        # create btns:
+        btns <- create_buttons(btn_ids = seq_len(nrow(newtable)))
+        
+        # add the btns as a column to newtable:
+        newtable$Buttons <- btns
+        
         rv_table(newtable)
       })
       
@@ -31,6 +37,8 @@ get_server <- function(id, get_url, header_authorization) {
         DT::datatable(
           data = rv_table(), 
           rownames = FALSE, 
+          escape = FALSE, 
+          selection = 'single', 
           class = c('display', 'nowrap'), 
           options = list(processing = FALSE, lengthChange = FALSE)
         )

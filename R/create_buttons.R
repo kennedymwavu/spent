@@ -13,7 +13,7 @@ create_buttons <- function(btn_ids) {
         id = paste0('edit_', id), 
         type = 'button', 
         onclick = 'get_id(this.id)', 
-        icon = icon(name = 'glyphicon glyphicon-pencil', lib = 'glyphicon')
+        tags$i(class = 'fas fa-edit')
       )
       
       delete_btn <- tags$button(
@@ -21,7 +21,7 @@ create_buttons <- function(btn_ids) {
         id = paste0('delete_', id), 
         type = 'button', 
         onclick = 'get_id(this.id)', 
-        icon = icon(name = 'glyphicon glyphicon-trash', lib = 'glyphicon')
+        tags$i(class = 'fa fa-trash-alt')
       )
       
       tags$div(
