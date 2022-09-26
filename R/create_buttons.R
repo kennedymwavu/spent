@@ -26,6 +26,7 @@ create_buttons <- function(btn_ids) {
       
       tags$div(
         class = 'btn-group', 
+        style = 'display: flex; flex-wrap: nowrap;', 
         edit_btn, 
         delete_btn
       ) |> 
