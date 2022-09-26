@@ -47,13 +47,27 @@ server <- function(input, output, session) {
   })
   
   output$table <- DT::renderDT({
+    # column names: don't include the last column name `Buttons`:
+    cnms <- colnames(rv_table$tbl)
+    touse <- c(cnms[-length(cnms)], '')
+    
     DT::datatable(
       data = rv_table$tbl, 
       rownames = FALSE, 
+      colnames = touse, 
       escape = FALSE, 
       selection = 'single', 
       class = c('display', 'nowrap'), 
-      options = list(processing = FALSE, lengthChange = FALSE)
+      options = list(
+        processing = FALSE, 
+        scrollX = TRUE, 
+        lengthChange = FALSE, 
+        columnDefs = list(
+          list(
+            className = 'dt-center', targets = '_all'
+          )
+        )
+      )
     )
   })
   
