@@ -17,8 +17,16 @@ ui <- bootstrapPage(
     class = 'text-center', 
     tags$h2('GET & POST HTTP Requests'), 
     tags$h5(
+      style = 'font-weight: 300;', 
+      
       'By ', 
-      tags$a(href = 'https://mwavu.com/', 'Kennedy Mwavu', target = '_blank')
+      
+      tags$a(
+        href = 'https://mwavu.com/', 
+        target = '_blank', 
+        style = 'color: #336699;', 
+        'Kennedy Mwavu'
+      )
     )
   ), 
   
