@@ -19,28 +19,40 @@ post_ui <- function(id) {
         
         textInput(
           inputId = ns('fullnames'), 
-          label = 'Full Names',
+          label = tags$div(
+            'Full Names', 
+            tags$span('*', style = 'color: #f57a00;')
+          ),
           placeholder = 'John Wick', 
           width = '500px'
         ), 
         
         textInput(
           inputId = ns('email'), 
-          label = 'Email:', 
+          label = tags$div(
+            'Email', 
+            tags$span('*', style = 'color: #f57a00;')
+          ), 
           placeholder = 'johnwick@gmail.com', 
           width = '500px'
         ), 
         
         textInput(
           inputId = ns('phone'), 
-          label = 'Phone Number:', 
+          label = tags$div(
+            'Phone Number', 
+            tags$span('*', style = 'color: #f57a00;')
+          ), 
           placeholder = '+254712345672', 
           width = '500px'
         ), 
         
         textInput(
           inputId = ns('address'), 
-          label = 'Address', 
+          label = tags$div(
+            'Address', 
+            tags$span('*', style = 'color: #f57a00;')
+          ), 
           placeholder = 'Afya Center, Nairobi | 337407', 
           width = '500px'
         )
