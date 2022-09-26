@@ -33,15 +33,17 @@ server <- function(input, output, session) {
     DT::datatable(
       data = rv_table(), 
       rownames = FALSE, 
-      extensions = c("Buttons"),
+      extensions = c('Buttons'), 
+      selection = 'single', 
       options = list(
+        processing = FALSE, 
         scrollX = TRUE,
         dom = 'Bftip', 
         buttons = list(
           list(
-            extend = "excel",
-            text = "Download",
-            title = paste0("gict-get-data-", Sys.Date())
+            extend = 'excel',
+            text = 'Download',
+            title = paste0('gict-get-data-', Sys.Date())
           )
         )
       )
