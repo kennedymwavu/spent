@@ -15,12 +15,16 @@ ui <- bootstrapPage(
   
   tags$header(
     class = 'text-center', 
-    tags$h1('GET & POST HTTP Requests'), 
-    tags$h4('By Kennedy Mwavu')
+    tags$h2('GET & POST HTTP Requests'), 
+    tags$h5(
+      'By ', 
+      tags$a(href = 'https://mwavu.com/', 'Kennedy Mwavu', target = '_blank')
+    )
   ), 
   
   navbarPage(
     title = 'GICT Task', 
+    collapsible = TRUE, 
     
     tabPanel(
       title = 'POST', 
@@ -142,19 +146,19 @@ ui <- bootstrapPage(
             class = 'social-links', 
             
             tags$a(
-              href = '#', 
+              href = 'https://www.facebook.com/profile.php?id=100084291762716', 
               tags$i(class = 'fab fa-facebook-f')
             ), 
             tags$a(
-              href = '#', 
+              href = 'https://twitter.com/kennedymwavu', 
               tags$i(class = 'fab fa-twitter')
             ), 
             tags$a(
-              href = '#', 
+              href = 'https://www.instagram.com/mwavukennedy/', 
               tags$i(class = 'fab fa-instagram')
             ), 
             tags$a(
-              href = '#', 
+              href = 'https://www.linkedin.com/in/mwavukennedy/', 
               tags$i(class = 'fab fa-linkedin-in')
             )
           )
