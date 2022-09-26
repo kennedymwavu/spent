@@ -48,15 +48,15 @@ post_server <- function(id, post_url) {
             msg <- httr::content(r, as = 'raw') |> rawToChar()
             
             # Throw error or warning when necessary:
-            stop_for_status(r)
-            warn_for_status(r)
+            httr::stop_for_status(r)
+            httr::warn_for_status(r)
             
             # If okay, show user success:
             shinytoastr::toastr_success(
               message = httr::content(r)$Message,
               title = 'Success!', 
               progressBar = TRUE, 
-              position = 'top-center'
+              closeButton = TRUE
             )
             
             # reset loading btn:
@@ -68,7 +68,8 @@ post_server <- function(id, post_url) {
           
           error = function(cond) {
             shinytoastr::toastr_error(
-              message = msg
+              message = msg, 
+              closeButton = TRUE
             )
             
             # reset loading btn:
@@ -83,7 +84,8 @@ post_server <- function(id, post_url) {
           
           warning = function(cond) {
             shinytoastr::toastr_warning(
-              message = msg
+              message = msg, 
+              closeButton = TRUE
             )
             
             # print warning on console for debugging:
