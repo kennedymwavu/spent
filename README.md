@@ -1,4 +1,4 @@
-# gict-task
+# Task
 
 Create a page with a header, navbar and footer. 
 
@@ -12,100 +12,7 @@ Once completed create a GitHub repository and share the link with us so that we 
 
 Please send the results to richard.rajwayi@gictsystems.com
 
-## How I went about the task
+## Tech Stack Used
 
-- Add edit + delete btns to DT [link](https://www.r-bloggers.com/2021/01/adding-action-buttons-in-rows-of-dt-data-table-in-r-shiny/)
-
-- Handle http requests using [httr](https://cran.r-project.org/web/packages/httr/vignettes/quickstart.html)
-
-- GET and POST requests R shiny POC:
-
-```r
-library(shiny)
-library(httr)
-
-ui <- navbarPage(
-  title = 'GICT Task', 
-  
-  tabPanel(
-    title = 'POST', 
-    
-    tags$h1('My title'), 
-    textInput(
-      inputId = 'fullnames', 
-      label = 'Full Names',
-      placeholder = 'eg. John Wick'
-    ), 
-    
-    textInput(
-      inputId = 'email', 
-      label = 'Email:', 
-      placeholder = 'eg. you@email.com'
-    ), 
-    
-    textInput(
-      inputId = 'phone', 
-      label = 'Phone Number:', 
-      placeholder = 'eg. +2547123456'
-    ), 
-    
-    textInput(
-      inputId = 'address', 
-      label = 'Address', 
-      placeholder = 'eg. po box 256'
-    ), 
-    
-    actionButton(
-      inputId = 'submit', 
-      label = 'Submit'
-    )
-  ), 
-  
-  tabPanel(
-    title = 'GET', 
-    
-    actionButton(
-      inputId = 'get', 
-      label = 'GET'
-    )
-  )
-)
-
-server <- function(input, output, session) {
-  observeEvent(input$submit, {
-    r <- POST(
-      url = 'http://developers.gictsystems.com/api/dummy/submit/', 
-      body = list(
-        fullnames = input$fullnames, 
-        email = input$email, 
-        phone = input$phone, 
-        address = input$address
-      ), 
-      encode = 'json'
-    )
-    
-    print(r$status_code)
-    print(content(r))
-    print(content(r)$Message)
-    print(message_for_status(r))
-  })
-  
-  observeEvent(input$get, {
-    # tab2:
-    getdata <- GET(
-      url='http://developers.gictsystems.com/api/dummy/items/', 
-      add_headers(Authorization="Bearer ALDJAK23423JKSLAJAF23423J23SAD3")
-    )
-    
-    print(status_code(getdata))
-    
-    print(content(getdata))
-  })
-}
-
-shinyApp(ui, server)
-
-```
-
-- Field validation
-    - https://merlinoa.github.io/shinyFeedback/
+- Front-end: `HTML`, `CSS` & `JS`
+- Backend: `R`
