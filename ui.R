@@ -1,5 +1,6 @@
 ui <- shiny::tagList(
   shinytoastr::useToastr(), 
+  includeScript(path = file.path('www', 'js', 'script.js')), 
   
   tags$header(
     tags$h1('My Header'), 
@@ -18,7 +19,14 @@ ui <- shiny::tagList(
     tabPanel(
       title = 'GET', 
       
-      DT::DTOutput(outputId = 'table')
+      # get_ui(id = 'get')
+      
+      tags$div(
+        class = 'container', 
+        style = 'margin-top: 50px;', 
+        
+        DT::DTOutput(outputId = 'table')
+      )
     )
   )
 )
