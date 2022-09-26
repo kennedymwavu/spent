@@ -41,6 +41,9 @@ server <- function(input, output, session) {
     newtable$Buttons <- btns
     
     rv_table$tbl <- newtable
+    
+    # update keep track id:
+    rv_table$keep_track_id <- nrow(newtable) + 1
   })
   
   output$table <- DT::renderDT({
@@ -65,22 +68,93 @@ server <- function(input, output, session) {
     )
   })
   
-  # delete row:
+  # delete----
   observeEvent(input$current_id, {
-    print('Here')
-    print(input$current_id)
     req(
       isTruthy(input$current_id) & 
-        stringr::str_detect(input$current_id, pattern = "delete")
+        stringr::str_detect(input$current_id, pattern = 'delete')
     )
     
     rv_table$dt_row <- which(
       stringr::str_detect(
         rv_table$tbl$Buttons, 
-        pattern = paste0("\\b", input$current_id, "\\b")
+        pattern = paste0('\\b', input$current_id, '\\b')
       )
     )
     
     rv_table$tbl <- rv_table$tbl[-rv_table$dt_row, ]
+  })
+  
+  # edit----
+  # when edit button is clicked, modal dialog shows current editable row 
+  # filled out:
+  observeEvent(input$current_id, {
+    req(
+      isTruthy(input$current_id) & 
+        stringr::str_detect(input$current_id, pattern = 'edit')
+    )
+    
+    rv_table$dt_row <- which(
+      stringr::str_detect(
+        rv_table$tbl$Buttons, pattern = paste0('\\b', input$current_id, '\\b')
+      )
+    )
+    
+    df <- rv_table$tbl[rv_table$dt_row, ]
+    
+    modal_dialog(
+      ID = df$ID, Message = df$Message, Age = df$Age, edit = TRUE
+    )
+    
+    rv_table$add_or_edit <- NULL
+  })
+  
+  # when final edit button is clicked, table will be changed:
+  observeEvent(input$final_edit, {
+    req(
+      isTruthy(input$current_id) & 
+        stringr::str_detect(input$current_id, pattern = "edit") & 
+        is.null(rv_table$add_or_edit)
+    )
+    
+    rv_table$edited_row <- data.frame(
+      ID = input$id, 
+      Message = input$msg, 
+      Age = input$age, 
+      Buttons = rv_table$tbl$Buttons[rv_table$dt_row]
+    )
+    
+    rv_table$tbl[rv_table$dt_row, ] <- rv_table$edited_row
+  })
+  
+  # add----
+  observeEvent(input$add_row, {
+    modal_dialog(ID = '', Message = '', Age = '', edit = FALSE)
+    
+    rv_table$add_or_edit <- 1
+  })
+  
+  observeEvent(input$final_edit, {
+    req(rv_table$add_or_edit == 1)
+    
+    add_row <- data.frame(
+      ID = input$id, 
+      Message = input$msg, 
+      Age = input$age, 
+      Buttons = create_buttons(rv_table$keep_track_id)
+    )
+    
+    rv_table$tbl <- rbind(rv_table$tbl, add_row)
+    
+    rv_table$keep_track_id <- rv_table$keep_track_id + 1
+  })
+  
+  # remove modal when requested:
+  observeEvent(input$dismiss_modal, {
+    removeModal()
+  })
+  
+  observeEvent(input$final_edit, {
+    removeModal()
   })
 }
