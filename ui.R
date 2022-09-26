@@ -1,10 +1,22 @@
-ui <- shiny::tagList(
+ui <- bootstrapPage(
+  theme = shinythemes::shinytheme('journal'),
+  title = 'GICT-Task', 
+  
   shinytoastr::useToastr(), 
   includeScript(path = file.path('www', 'js', 'script.js')), 
+  includeCSS(path = file.path('www', 'css', 'styles.css')), 
+  tags$head(
+    tags$link(
+      rel = 'stylesheet', 
+      type = 'text/css', 
+      href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css'
+    )
+  ), 
   
   tags$header(
-    tags$h1('My Header'), 
-    tags$h2('My Subtitle')
+    class = 'text-center', 
+    tags$h1('GET & POST HTTP Requests'), 
+    tags$h4('By Kennedy Mwavu')
   ), 
   
   navbarPage(
@@ -22,118 +34,132 @@ ui <- shiny::tagList(
       # get_ui(id = 'get')
       
       tags$div(
-        class = 'container',
+        class = 'mycontainer', 
+        
         tags$div(
+          class = 'container',
+          tags$div(
+            style = 'margin-top: 50px;', 
+            
+            actionButton(
+              inputId = 'add_row',
+              label = 'Add Row',
+              icon = icon('plus'),
+              class = 'btn-success'
+            )
+          )
+        ), 
+        
+        tags$div(
+          class = 'container', 
           style = 'margin-top: 50px;', 
           
-          actionButton(
-            inputId = 'add_row',
-            label = 'Add Row',
-            icon = icon('plus'),
-            class = 'btn-success'
-          )
+          DT::DTOutput(outputId = 'table', height = '500px')
         )
-      ), 
-      
-      tags$div(
-        class = 'container', 
-        style = 'margin-top: 50px;', 
-        
-        DT::DTOutput(outputId = 'table')
       )
     )
   ), 
   
   # footer:
   tags$footer(
-    class = 'page-footer font-small blue pt-4', 
+    class = 'footer', 
     
-    # footer links:
     tags$div(
-      class = 'container-fluid text-center text-md-left', 
+      class = 'footer-container', 
       
-      # grid row:
       tags$div(
-        class = 'row', 
+        class = 'footer-row', 
         
-        # grid column:
         tags$div(
-          class = 'col-md-6 mt-md-0 mt-3', 
+          class = 'footer-col', 
           
-          # content:
-          tags$h5(
-            class = 'text-uppercase', 
-            'Footer Content'
-          ), 
-          
-          tags$p(
-            'Here you can use rows and columns to organize your footer content.'
-          )
-        ), 
-        
-        tags$hr(class = 'clearfix w-100 d-md-none pb-3'), 
-        
-        # grid column:
-        tags$div(
-          class = 'col-md-3 mb-md-0 mb-3', 
-          
-          # links:
-          tags$h5(class = 'text-uppercase', 'Links'), 
-          
+          tags$h4('company'), 
           tags$ul(
-            class = 'list-unstyled', 
-            
             tags$li(
-              tags$a(href = '#!', 'Link 1')
+              tags$a(href = '#', 'about us')
             ), 
             tags$li(
-              tags$a(href = '#!', 'Link 2')
+              tags$a(href = '#', 'our services')
             ), 
             tags$li(
-              tags$a(href = '#!', 'Link 3')
+              tags$a(href = '#', 'privacy policy')
             ), 
             tags$li(
-              tags$a(
-                href = '#!', 'Link 4'
-              )
+              tags$a(href = '#', 'affiliate program')
             )
           )
         ), 
         
-        # grid column:
         tags$div(
-          class = 'col-md-3 mb-md-0 mb-3', 
+          class = 'footer-col', 
           
-          # links:
-          tags$h5(class = 'text-uppercase', 'Links'), 
-          
+          tags$h4('get help'), 
           tags$ul(
-            class = 'list-unstyled', 
+            tags$li(
+              tags$a(href = '#', 'FAQ')
+            ), 
+            tags$li(
+              tags$a(href = '#', 'shipping')
+            ), 
+            tags$li(
+              tags$a(href = '#', 'returns')
+            ), 
+            tags$li(
+              tags$a(href = '#', 'order status')
+            ), 
+            tags$li(
+              tags$a(href = '#', 'payment options')
+            )
+          )
+        ), 
+        
+        tags$div(
+          class = 'footer-col', 
+          
+          tags$h4('online shop'), 
+          tags$ul(
+            tags$li(
+              tags$a(href = '#', 'watch')
+            ), 
+            tags$li(
+              tags$a(href = '#', 'bag')
+            ), 
+            tags$li(
+              tags$a(href = '#', 'shoes')
+            ), 
+            tags$li(
+              tags$a(href = '#', 'dress')
+            )
+          )
+        ), 
+        
+        tags$div(
+          class = 'footer-col', 
+          
+          tags$h4('follow us'), 
+          
+          tags$div(
+            class = 'social-links', 
             
-            tags$li(
-              tags$a(href = '#!', 'Link 1')
+            tags$a(
+              href = '#', 
+              tags$i(class = 'fab fa-facebook-f')
             ), 
-            tags$li(
-              tags$a(href = '#!', 'Link 2')
+            tags$a(
+              href = '#', 
+              tags$i(class = 'fab fa-twitter')
             ), 
-            tags$li(
-              tags$a(href = '#!', 'Link 3')
+            tags$a(
+              href = '#', 
+              tags$i(class = 'fab fa-instagram')
             ), 
-            tags$li(
-              tags$a(
-                href = '#!', 'Link 4'
-              )
+            tags$a(
+              href = '#', 
+              tags$i(class = 'fab fa-linkedin-in')
             )
           )
         )
       )
-    ), 
-    
-    # copyright:
-    tags$div(
-      class = 'footer-copyright text-center py-3', 
-      HTML('&copy; 2022 Copyright:'), 
-      tags$a(href = '/', 'gict-task.com')
     )
   )
 )
