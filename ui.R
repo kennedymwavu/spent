@@ -5,11 +5,18 @@ ui <- bootstrapPage(
   shinytoastr::useToastr(), 
   includeScript(path = file.path('www', 'js', 'script.js')), 
   includeCSS(path = file.path('www', 'css', 'styles.css')), 
+  
   tags$head(
     tags$link(
       rel = 'stylesheet', 
       type = 'text/css', 
       href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css'
+    ), 
+    
+    tags$link(
+      rel = 'icon', 
+      type = 'image/x-icon', 
+      href = file.path('imgs', 'favicon.ico')
     )
   ), 
   
