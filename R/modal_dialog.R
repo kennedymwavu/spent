@@ -4,10 +4,12 @@
 #' @param Message Current row's Message value
 #' @param Age Current row's Age value
 #' @param edit Whether to edit row or not
+#' @param ns [shiny::NS()] obj. Namespace of the module from which this modal 
+#' is called.
 #'
 #' @return shiny::modalDialog
 #' @noRd
-modal_dialog <- function(ID, Message, Age, edit) {
+modal_dialog <- function(ns, ID, Message, Age, edit) {
   x <- if (edit) 'Submit Edits' else 'Add New Row'
   
   shiny::modalDialog(
@@ -18,14 +20,14 @@ modal_dialog <- function(ID, Message, Age, edit) {
       class = 'pull-right container', 
       
       actionButton(
-        inputId = 'final_edit',
+        inputId = ns(id = 'final_edit'),
         label = x,
         icon = icon('edit'),
         class = 'btn-info'
       ), 
       
       actionButton(
-        inputId = 'dismiss_modal',
+        inputId = ns(id = 'dismiss_modal'),
         label = 'Close',
         class = 'btn-danger'
       )
@@ -39,7 +41,7 @@ modal_dialog <- function(ID, Message, Age, edit) {
         style = 'display: inline-block;', 
         
         textInput(
-          inputId = 'id',
+          inputId = ns(id = 'id'),
           label = 'ID',
           value = ID,
           placeholder = 'ID',
@@ -51,7 +53,7 @@ modal_dialog <- function(ID, Message, Age, edit) {
         style = 'display: inline-block;', 
         
         textInput(
-          inputId = 'msg',
+          inputId = ns(id = 'msg'),
           label = 'Message',
           value = Message,
           width = '200px'
@@ -62,7 +64,7 @@ modal_dialog <- function(ID, Message, Age, edit) {
         style = 'display: inline-block;', 
         
         numericInput(
-          inputId = 'age',
+          inputId = ns(id = 'age'),
           label = 'Age',
           value = Age,
           width = '200px'
