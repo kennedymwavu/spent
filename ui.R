@@ -1,6 +1,6 @@
 ui <- bootstrapPage(
   theme = shinythemes::shinytheme('journal'),
-  title = 'GICT-Task', 
+  title = 'Spent', 
   
   shinytoastr::useToastr(), 
   includeScript(path = file.path('www', 'js', 'script.js')), 
@@ -22,7 +22,7 @@ ui <- bootstrapPage(
   
   tags$header(
     class = 'text-center', 
-    tags$h2('GET & POST HTTP Requests'), 
+    tags$h2('Home Expenditure Tracker'), 
     tags$h5(
       style = 'font-weight: 300;', 
       
@@ -38,17 +38,17 @@ ui <- bootstrapPage(
   ), 
   
   navbarPage(
-    title = 'GICT Task', 
+    title = 'Spent', 
     collapsible = TRUE, 
     
     tabPanel(
-      title = 'POST', 
+      title = 'Analysis', 
       
       post_ui(id = 'post')
     ), 
     
     tabPanel(
-      title = 'GET', 
+      title = 'Records', 
       
       get_ui(id = 'get')
     )
