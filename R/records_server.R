@@ -5,7 +5,7 @@
 #' @param header_authorization Header authorization
 #'
 #' @noRd
-get_server <- function(id, get_url, header_authorization) {
+records_server <- function(id, get_url, header_authorization) {
   moduleServer(
     id = id, 
     module = function(input, output, session) {

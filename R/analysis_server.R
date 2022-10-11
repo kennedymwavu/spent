@@ -5,7 +5,7 @@
 #'
 #' @return NULL
 #' @noRd
-post_server <- function(id, post_url) {
+analysis_server <- function(id, post_url) {
   moduleServer(
     id = id, 
     module = function(input, output, session) {

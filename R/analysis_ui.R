@@ -4,7 +4,7 @@
 #'
 #' @return A shiny::tagList obj
 #' @noRd
-post_ui <- function(id) {
+analysis_ui <- function(id) {
   ns <- NS(namespace = id)
   
   shiny::tagList(

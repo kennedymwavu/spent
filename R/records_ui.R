@@ -4,7 +4,7 @@
 #'
 #' @return shiny::tagList
 #' @noRd
-get_ui <- function(id) {
+records_ui <- function(id) {
   ns <- NS(id)
   
   shiny::tagList(

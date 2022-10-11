@@ -5,9 +5,9 @@ server <- function(input, output, session) {
     header_authorization = 'Bearer ALDJAK23423JKSLAJAF23423J23SAD3'
   )
   
-  post_server(id = 'post', post_url = rv_req_details$post_url)
+  analysis_server(id = 'post', post_url = rv_req_details$post_url)
   
-  get_server(
+  records_server(
     id = 'get',
     get_url = rv_req_details$get_url,
     header_authorization = rv_req_details$header_authorization
