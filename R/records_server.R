@@ -132,7 +132,7 @@ records_server <- function(id) {
         )
         
         rv_table$edited_row <- data.frame(
-          datetime = lubridate::dmy_hms(input$datetime), 
+          datetime = lubridate::ymd_hms(input$datetime), 
           supermarket = input$supermarket, 
           item = input$item, 
           qty = input$qty, 
@@ -147,7 +147,7 @@ records_server <- function(id) {
       observeEvent(input$add_row, {
         modal_dialog(
           ns = ns, 
-          datetime = '', 
+          datetime = lubridate::now() |> as.character(), 
           supermarket = '', 
           item = '', 
           qty = 1, 
@@ -162,7 +162,7 @@ records_server <- function(id) {
         req(rv_table$add_or_edit == 1)
         
         add_row <- data.frame(
-          datetime = lubridate::dmy_hms(input$datetime), 
+          datetime = lubridate::ymd_hms(input$datetime), 
           supermarket = input$supermarket, 
           item = input$item, 
           qty = input$qty, 
