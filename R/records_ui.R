@@ -1,4 +1,4 @@
-#' GET ui module
+#' records ui module
 #'
 #' @param id module id
 #'

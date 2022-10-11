@@ -1,15 +1,17 @@
 #' Edit row modal
-#'
-#' @param ID Current row's ID value
-#' @param Message Current row's Message value
-#' @param Age Current row's Age value
-#' @param edit Whether to edit row or not
+#' 
 #' @param ns [shiny::NS()] obj. Namespace of the module from which this modal 
 #' is called.
+#' @param datetime Date and Time: [lubridate::dmy_hms()]
+#' @param supermarket The supermarket I bought items from
+#' @param item Name of item
+#' @param qty Quantity of item
+#' @param price Price of a single unit of item
+#' @param edit Whether we're making an edit (TRUE) or a new row (FALSE)
 #'
 #' @return shiny::modalDialog
 #' @noRd
-modal_dialog <- function(ns, ID, Message, Age, edit) {
+modal_dialog <- function(ns, datetime, supermarket, item, qty, price, edit) {
   x <- if (edit) 'Submit Edits' else 'Add New Row'
   
   shiny::modalDialog(
@@ -41,10 +43,10 @@ modal_dialog <- function(ns, ID, Message, Age, edit) {
         style = 'display: inline-block;', 
         
         textInput(
-          inputId = ns(id = 'id'),
-          label = 'ID',
-          value = ID,
-          placeholder = 'ID',
+          inputId = ns(id = 'datetime'),
+          label = 'Date and Time',
+          value = datetime,
+          placeholder = 'dd-mm-yyyy H:M:S',
           width = '200px'
         )
       ), 
@@ -53,9 +55,9 @@ modal_dialog <- function(ns, ID, Message, Age, edit) {
         style = 'display: inline-block;', 
         
         textInput(
-          inputId = ns(id = 'msg'),
-          label = 'Message',
-          value = Message,
+          inputId = ns(id = 'supermarket'),
+          label = 'Supermarket',
+          value = supermarket,
           width = '200px'
         )
       ), 
@@ -63,10 +65,33 @@ modal_dialog <- function(ns, ID, Message, Age, edit) {
       tags$div(
         style = 'display: inline-block;', 
         
-        numericInput(
-          inputId = ns(id = 'age'),
-          label = 'Age',
-          value = Age,
+        textInput(
+          inputId = ns(id = 'item'),
+          label = 'Item',
+          value = item,
+          width = '200px'
+        )
+      ), 
+      
+      tags$div(
+        style = 'display: inline-block;', 
+        
+        shinyWidgets::autonumericInput(
+          inputId = ns(id = 'qty'),
+          label = 'Quantity',
+          value = qty, 
+          width = '200px'
+        )
+      ), 
+      
+      tags$div(
+        style = 'display: inline-block;', 
+        
+        shinyWidgets::autonumericInput(
+          inputId = ns(id = 'price'),
+          label = 'Price',
+          value = price, 
+          currencySymbol = 'KES ', 
           width = '200px'
         )
       )

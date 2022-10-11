@@ -1,18 +1,13 @@
-#' GET server module
+#' records server module
 #'
 #' @param id module id
-#' @param get_url GET url
-#' @param header_authorization Header authorization
 #'
 #' @noRd
-records_server <- function(id, get_url, header_authorization) {
+records_server <- function(id) {
   moduleServer(
     id = id, 
     module = function(input, output, session) {
       ns <- NS(id)
-      
-      # autoinvalidator to reload table every 10 seconds:
-      autoinvalidator <- reactiveTimer(intervalMs = 10 * 1000, session = session)
       
       rv_table <- reactiveValues(
         tbl = NULL, 
@@ -22,15 +17,16 @@ records_server <- function(id, get_url, header_authorization) {
         keep_track_id = NULL
       )
       
-      observeEvent(autoinvalidator(), {
-        # GET request:
-        r <- httr::GET(
-          url = get_url, 
-          httr::add_headers(Authorization = header_authorization)
-        )
-        
-        newtable <- lapply(httr::content(r), as.data.frame) |> 
-          do.call(what = 'rbind')
+      # read in csv file reactively:
+      r_spt <- reactiveFileReader(
+        intervalMillis = 1000, 
+        session = session, 
+        filePath = 'spt.csv', 
+        readFunc = data.table::fread
+      )
+      
+      observeEvent(r_spt(), {
+        newtable <- r_spt()
         
         # create btns:
         btns <- create_buttons(ns = ns, btn_ids = seq_len(nrow(newtable)))
@@ -115,7 +111,13 @@ records_server <- function(id, get_url, header_authorization) {
         df <- rv_table$tbl[rv_table$dt_row, ]
         
         modal_dialog(
-          ns = ns, ID = df$ID, Message = df$Message, Age = df$Age, edit = TRUE
+          ns = ns, 
+          datetime = df$datetime, 
+          supermarket = df$supermarket, 
+          item = df$item, 
+          qty = df$qty, 
+          price = df$price, 
+          edit = TRUE
         )
         
         rv_table$add_or_edit <- NULL
@@ -130,9 +132,11 @@ records_server <- function(id, get_url, header_authorization) {
         )
         
         rv_table$edited_row <- data.frame(
-          ID = input$id, 
-          Message = input$msg, 
-          Age = input$age, 
+          datetime = lubridate::dmy_hms(input$datetime), 
+          supermarket = input$supermarket, 
+          item = input$item, 
+          qty = input$qty, 
+          price = input$price, 
           Buttons = rv_table$tbl$Buttons[rv_table$dt_row]
         )
         
@@ -141,7 +145,15 @@ records_server <- function(id, get_url, header_authorization) {
       
       # add----
       observeEvent(input$add_row, {
-        modal_dialog(ns = ns, ID = '', Message = '', Age = '', edit = FALSE)
+        modal_dialog(
+          ns = ns, 
+          datetime = '', 
+          supermarket = '', 
+          item = '', 
+          qty = 1, 
+          price = 0, 
+          edit = FALSE
+        )
         
         rv_table$add_or_edit <- 1
       })
@@ -150,9 +162,11 @@ records_server <- function(id, get_url, header_authorization) {
         req(rv_table$add_or_edit == 1)
         
         add_row <- data.frame(
-          ID = input$id, 
-          Message = input$msg, 
-          Age = input$age, 
+          datetime = lubridate::dmy_hms(input$datetime), 
+          supermarket = input$supermarket, 
+          item = input$item, 
+          qty = input$qty, 
+          price = input$price, 
           Buttons = create_buttons(ns = ns, btn_ids = rv_table$keep_track_id)
         )
         

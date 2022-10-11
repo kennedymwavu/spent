@@ -44,13 +44,13 @@ ui <- bootstrapPage(
     tabPanel(
       title = 'Analysis', 
       
-      analysis_ui(id = 'post')
+      analysis_ui(id = 'analysis')
     ), 
     
     tabPanel(
       title = 'Records', 
       
-      records_ui(id = 'get')
+      records_ui(id = 'records')
     )
   ), 
   
