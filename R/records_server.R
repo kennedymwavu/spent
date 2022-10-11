@@ -42,8 +42,7 @@ records_server <- function(id) {
       
       output$table <- DT::renderDT({
         # column names: don't include the last column name `Buttons`:
-        cnms <- colnames(rv_table$tbl)
-        touse <- c(cnms[-length(cnms)], '')
+        touse <- c('Datetime', 'Supermarket', 'Item', 'Quantity', 'Price', '')
         
         DT::datatable(
           data = rv_table$tbl, 
