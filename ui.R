@@ -2,6 +2,7 @@ ui <- bootstrapPage(
   theme = shinythemes::shinytheme('journal'),
   title = 'Spent', 
   
+  shinyjs::useShinyjs(), 
   shinytoastr::useToastr(), 
   includeScript(path = file.path('www', 'js', 'script.js')), 
   includeCSS(path = file.path('www', 'css', 'styles.css')), 
