@@ -39,7 +39,9 @@ records_server <- function(id) {
       
       output$table <- DT::renderDT({
         # column names: don't include the last column name `Buttons`:
-        touse <- c('Datetime', 'Supermarket', 'Item', 'Quantity', 'Price', '')
+        touse <- c(
+          'Datetime', 'Supermarket', 'Item', 'Quantity', 'Price (KES)', ''
+        )
         
         DT::datatable(
           data = rv_table$tbl, 
@@ -58,7 +60,11 @@ records_server <- function(id) {
               )
             )
           )
-        )
+        ) |> 
+          DT::formatCurrency(
+            columns = c('price'), 
+            currency = ''
+          )
       })
       
       proxy <- DT::dataTableProxy('table')
@@ -196,7 +202,23 @@ records_server <- function(id) {
           closeButton = TRUE, 
           progressBar = TRUE
         )
+        
+        Sys.sleep(1.5)
+        
+        # hide btn after saving:
+        shinyjs::hide(
+          id = 'div_save_btn'
+        )
       })
+      
+      # show save btn when there's a change in table:
+      observeEvent(rv_table$tbl, {
+        shinyjs::show(
+          id = 'div_save_btn'
+        )
+      }, 
+        ignoreInit = TRUE
+      )
     }
   )
 }
