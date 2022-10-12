@@ -46,7 +46,7 @@ modal_dialog <- function(ns, datetime, supermarket, item, qty, price, edit) {
           inputId = ns(id = 'datetime'),
           label = 'Date and Time',
           value = datetime,
-          placeholder = 'dd-mm-yyyy H:M:S',
+          placeholder = 'yyyy-mm-dd H:M:S',
           width = '200px'
         )
       ), 
