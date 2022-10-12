@@ -16,6 +16,16 @@ body {
 	padding: 5px;
 }
 
+.record-btns {
+  margin-top: 50px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-content: center;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .details {
     display: flex;
     flex-direction: column;
