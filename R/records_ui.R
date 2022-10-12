@@ -36,7 +36,23 @@ records_ui <- function(id) {
             color.background = 'white', 
             hide.ui = FALSE
           )
-      )
+      ), 
+      
+      tags$div(
+        class = 'container text-right', 
+        
+        tags$div(
+          style = 'margin-top: 50px;', 
+          
+          shinyFeedback::loadingButton(
+            inputId = ns('save'), 
+            label = 'Save Changes', 
+            loadingLabel = 'Saving...', 
+            loadingSpinner = 'sync', 
+            class = 'btn btn-info'
+          )
+        )
+      ), 
     )
   )
 }
