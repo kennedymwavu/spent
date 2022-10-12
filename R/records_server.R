@@ -17,13 +17,10 @@ records_server <- function(id) {
         keep_track_id = NULL
       )
       
-      # read in csv file reactively:
-      r_spt <- reactiveFileReader(
-        intervalMillis = 1000, 
-        session = session, 
-        filePath = 'spt.csv', 
-        readFunc = data.table::fread
-      )
+      # read in csv file (as a reactive for convenience, not necessary):
+      r_spt <- reactive({
+        data.table::fread(file = 'spt.csv')
+      })
       
       observeEvent(r_spt(), {
         newtable <- r_spt()
@@ -181,6 +178,24 @@ records_server <- function(id) {
       
       observeEvent(input$final_edit, {
         removeModal()
+      })
+      
+      # save changes:
+      observeEvent(input$save, {
+        spt <- rv_table$tbl[, .SD, .SDcols = -c('Buttons')]
+        data.table::fwrite(x = spt, file = 'spt.csv')
+        
+        shinyFeedback::resetLoadingButton(
+          inputId = 'save', 
+          session = session
+        )
+        
+        shinytoastr::toastr_success(
+          message = 'Changes Saved!', 
+          position = 'bottom-center', 
+          closeButton = TRUE, 
+          progressBar = TRUE
+        )
       })
     }
   )
