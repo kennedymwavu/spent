@@ -3,7 +3,7 @@
 #' @param ns [shiny::NS()] obj. Namespace of the module from which this modal 
 #' is called.
 #' @param datetime Date and Time: [lubridate::dmy_hms()]
-#' @param supermarket The supermarket I bought items from
+#' @param store The store I bought items from
 #' @param item Name of item
 #' @param qty Quantity of item
 #' @param price Price of a single unit of item
@@ -11,7 +11,7 @@
 #'
 #' @return shiny::modalDialog
 #' @noRd
-modal_dialog <- function(ns, datetime, supermarket, item, qty, price, edit) {
+modal_dialog <- function(ns, datetime, store, item, qty, price, edit) {
   x <- if (edit) 'Submit Edits' else 'Add New Row'
   
   shiny::modalDialog(
@@ -55,9 +55,9 @@ modal_dialog <- function(ns, datetime, supermarket, item, qty, price, edit) {
         style = 'display: inline-block;', 
         
         textInput(
-          inputId = ns(id = 'supermarket'),
-          label = 'Supermarket',
-          value = supermarket,
+          inputId = ns(id = 'store'),
+          label = 'Store',
+          value = store,
           width = '200px'
         )
       ), 

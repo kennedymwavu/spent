@@ -40,7 +40,7 @@ records_server <- function(id) {
       output$table <- DT::renderDT({
         # column names: don't include the last column name `Buttons`:
         touse <- c(
-          'Datetime', 'Supermarket', 'Item', 'Quantity', 'Price (KES)', ''
+          'Datetime', 'Store', 'Item', 'Quantity', 'Price (KES)', ''
         )
         
         DT::datatable(
@@ -115,7 +115,7 @@ records_server <- function(id) {
         modal_dialog(
           ns = ns, 
           datetime = df$datetime, 
-          supermarket = df$supermarket, 
+          store = df$store, 
           item = df$item, 
           qty = df$qty, 
           price = df$price, 
@@ -135,7 +135,7 @@ records_server <- function(id) {
         
         rv_table$edited_row <- data.frame(
           datetime = lubridate::ymd_hms(input$datetime), 
-          supermarket = input$supermarket, 
+          store = input$store, 
           item = input$item, 
           qty = input$qty, 
           price = input$price, 
@@ -150,7 +150,7 @@ records_server <- function(id) {
         modal_dialog(
           ns = ns, 
           datetime = lubridate::now() |> as.character(), 
-          supermarket = '', 
+          store = '', 
           item = '', 
           qty = 1, 
           price = 0, 
@@ -165,7 +165,7 @@ records_server <- function(id) {
         
         add_row <- data.frame(
           datetime = lubridate::ymd_hms(input$datetime), 
-          supermarket = input$supermarket, 
+          store = input$store, 
           item = input$item, 
           qty = input$qty, 
           price = input$price, 
