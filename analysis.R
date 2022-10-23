@@ -27,14 +27,15 @@ plt_amt_per_month <- amt_per_month[
 ] |> 
   echarts4r::e_charts_(x = 'Month') |> 
   echarts4r::e_line_(serie = 'Amount', smooth = TRUE) |> 
-  echarts4r::e_axis_labels(y = 'Amount (KES)') |> 
   echarts4r::e_title(text = 'Amount Per Month') |> 
+  echarts4r::e_legend(show = FALSE) |> 
   echarts4r::e_tooltip(
     trigger = 'item', 
     axisPointer = list(
       type = 'cross'
     )
-  )
+  ) |> 
+  echarts4r::e_toolbox_feature(feature = "saveAsImage")
 
 # which month did I spend the most?
 highest_spending_month <- amt_per_month[, .SD[which.max(amount)]]
