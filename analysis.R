@@ -3,6 +3,12 @@ spt <- data.table::fread(file = 'spt.csv')
 # add amount column:
 spt[, amount := qty * price]
 
+# rnm `Eastleigh Mattresses Limited - Kitengela` to `EastMatt - Kitengela`:
+spt[
+  store == 'Eastleigh Mattresses Limited - Kitengela', 
+  store := 'EastMatt - Kitengela'
+]
+
 # arrange rows by datetime:
 data.table::setorderv(x = spt, cols = 'datetime', order = -1)
 
@@ -20,13 +26,13 @@ plt_amt_per_month <- amt_per_month[
   , 
   list(
     # last day of col `month`:
-    Month = lubridate::ceiling_date(x = lubridate::my(month), unit = 'month') - 
+    month = lubridate::ceiling_date(x = lubridate::my(month), unit = 'month') - 
       lubridate::days(1), 
-    Amount = amount
+    amount
   )
 ] |> 
-  echarts4r::e_charts_(x = 'Month') |> 
-  echarts4r::e_line_(serie = 'Amount', smooth = TRUE) |> 
+  echarts4r::e_charts_(x = 'month') |> 
+  echarts4r::e_line_(serie = 'amount', smooth = TRUE, name = 'Amount') |> 
   echarts4r::e_title(text = 'Amount Per Month') |> 
   echarts4r::e_legend(show = FALSE) |> 
   echarts4r::e_tooltip(
@@ -162,20 +168,47 @@ items <- data.table::copy(spt)[
 
 # top n most bought items:
 n <- 10
-items[, list(freq = .N), by = 'item'][order(-freq), .SD[seq_len(n)]]
 
-items[, list(freq = .N), by = 'item'][order(-freq), .SD[seq_len(n)]][
-  order(freq)
-][, list(Frequency = freq, Item = item)] |> 
-  echarts4r::e_charts_(x = 'Item') |> 
-  echarts4r::e_bar_(serie = 'Frequency') |> 
+plt_top_n_items <- items[, list(freq = .N), by = 'item'][
+  order(-freq), .SD[seq_len(n)]
+][order(freq)] |> 
+  echarts4r::e_charts_(x = 'item') |> 
+  echarts4r::e_bar_(serie = 'freq', name = 'Item') |> 
   echarts4r::e_legend(show = FALSE) |> 
-  echarts4r::e_title(text = 'Most Bought Items') |> 
+  echarts4r::e_title(text = 'Most Bought Items By Frequency') |> 
   echarts4r::e_tooltip(trigger = 'item') |> 
-  echarts4r::e_flip_coords()
+  echarts4r::e_flip_coords() |> 
+  echarts4r::e_toolbox_feature(feature = "saveAsImage")
 
 # Most expensive item?
 spt[, .SD[which.max(amount)]]
 
 # Least expensive item?
 spt[, .SD[which.min(amount)]]
+
+# store frequency:
+# first count by datetime & store, then count by store alone:
+plt_store_freq <- spt[, list(freq = .N), by = c('datetime', 'store')][
+  , list(freq = .N), by = 'store'
+  ][order(freq)] |> 
+  echarts4r::e_charts_(x = 'store') |> 
+  echarts4r::e_bar_(serie = 'freq', name = 'Store') |> 
+  echarts4r::e_legend(show = FALSE) |> 
+  echarts4r::e_title(text = 'Frequency at each store') |> 
+  echarts4r::e_tooltip(trigger = 'item') |> 
+  echarts4r::e_flip_coords() |> 
+  echarts4r::e_toolbox_feature(feature = "saveAsImage")
+
+# Which hour of the day do I mostly go for shopping?
+plt_hr_freq <- spt[, .N, by = 'datetime'][
+  , list(hr = lubridate::hour(datetime))
+] |> 
+  echarts4r::e_charts_() |> 
+  echarts4r::e_histogram_(serie = 'hr', name = 'Frequency') |> 
+  echarts4r::e_legend(show = FALSE) |> 
+  echarts4r::e_axis_labels(x = 'Hour') |> 
+  echarts4r::e_title(text = 'Time of day I go for shopping') |> 
+  echarts4r::e_tooltip(trigger = 'item') |> 
+  echarts4r::e_toolbox_feature(feature = "saveAsImage")
+
+
