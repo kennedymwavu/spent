@@ -16,6 +16,26 @@ spt[, month := format(x = datetime, '%b %Y')]
 # how much per month?
 amt_per_month <- spt[, .(amount = sum(amount)), by = 'month']
 
+plt_amt_per_month <- amt_per_month[
+  , 
+  list(
+    # last day of col `month`:
+    Month = lubridate::ceiling_date(x = lubridate::my(month), unit = 'month') - 
+      lubridate::days(1), 
+    Amount = amount
+  )
+] |> 
+  echarts4r::e_charts_(x = 'Month') |> 
+  echarts4r::e_line_(serie = 'Amount', smooth = TRUE) |> 
+  echarts4r::e_axis_labels(y = 'Amount (KES)') |> 
+  echarts4r::e_title(text = 'Amount Per Month') |> 
+  echarts4r::e_tooltip(
+    trigger = 'item', 
+    axisPointer = list(
+      type = 'cross'
+    )
+  )
+
 # which month did I spend the most?
 highest_spending_month <- amt_per_month[, .SD[which.max(amount)]]
 
