@@ -33,7 +33,14 @@ plt_amt_per_month <- amt_per_month[
     trigger = 'item', 
     axisPointer = list(
       type = 'cross'
-    )
+    ), 
+    # format values by adding 'Kshs' prefix:
+    # ref: https://stackoverflow.com/a/14428340/16246909
+    valueFormatter = htmlwidgets::JS("
+    function(value){
+      return('Ksh ' + (Number(value)).toFixed(2).replace(/\\d(?=(\\d{3})+\\.)/g, '$&,'));
+    }
+  ")
   ) |> 
   echarts4r::e_toolbox_feature(feature = "saveAsImage")
 
@@ -153,9 +160,19 @@ items <- data.table::copy(spt)[
   item := 'Harpic'
 ]
 
-# top 10 most bought items:
+# top n most bought items:
 n <- 10
 items[, list(freq = .N), by = 'item'][order(-freq), .SD[seq_len(n)]]
+
+items[, list(freq = .N), by = 'item'][order(-freq), .SD[seq_len(n)]][
+  order(freq)
+][, list(Frequency = freq, Item = item)] |> 
+  echarts4r::e_charts_(x = 'Item') |> 
+  echarts4r::e_bar_(serie = 'Frequency') |> 
+  echarts4r::e_legend(show = FALSE) |> 
+  echarts4r::e_title(text = 'Most Bought Items') |> 
+  echarts4r::e_tooltip(trigger = 'item') |> 
+  echarts4r::e_flip_coords()
 
 # Most expensive item?
 spt[, .SD[which.max(amount)]]
