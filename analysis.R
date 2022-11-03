@@ -1,4 +1,8 @@
 spt <- data.table::fread(file = 'spt.csv')
+echarts4r::e_common(
+  font_family = "monospace",
+  theme = NULL
+)
 
 # add amount column:
 spt[, amount := qty * price]
@@ -33,6 +37,7 @@ plt_amt_per_month <- amt_per_month[
 ] |> 
   echarts4r::e_charts_(x = 'month') |> 
   echarts4r::e_line_(serie = 'amount', smooth = TRUE, name = 'Amount') |> 
+  echarts4r::e_color(color = '#44acb4') |> 
   echarts4r::e_title(text = 'Amount Per Month') |> 
   echarts4r::e_legend(show = FALSE) |> 
   echarts4r::e_tooltip(
@@ -174,6 +179,7 @@ plt_top_n_items <- items[, list(freq = .N), by = 'item'][
 ][order(freq)] |> 
   echarts4r::e_charts_(x = 'item') |> 
   echarts4r::e_bar_(serie = 'freq', name = 'Item') |> 
+  echarts4r::e_color(color = '#44acb4') |> 
   echarts4r::e_legend(show = FALSE) |> 
   echarts4r::e_title(text = 'Most Bought Items By Frequency') |> 
   echarts4r::e_tooltip(trigger = 'item') |> 
@@ -182,6 +188,12 @@ plt_top_n_items <- items[, list(freq = .N), by = 'item'][
 
 # Most expensive item?
 spt[, .SD[which.max(amount)]]
+
+# Top n most expensive items I've bought
+n <- 5
+
+tbl_top_most_expensive_items <- 
+spt[order(-price), .SD[seq_len(n)], .SDcols = -c('datetime')]
 
 # Least expensive item?
 spt[, .SD[which.min(amount)]]
@@ -193,6 +205,7 @@ plt_store_freq <- spt[, list(freq = .N), by = c('datetime', 'store')][
   ][order(freq)] |> 
   echarts4r::e_charts_(x = 'store') |> 
   echarts4r::e_bar_(serie = 'freq', name = 'Store') |> 
+  echarts4r::e_color(color = '#44acb4') |> 
   echarts4r::e_legend(show = FALSE) |> 
   echarts4r::e_title(text = 'Frequency at each store') |> 
   echarts4r::e_tooltip(trigger = 'item') |> 
@@ -205,6 +218,7 @@ plt_hr_freq <- spt[, .N, by = 'datetime'][
 ] |> 
   echarts4r::e_charts_() |> 
   echarts4r::e_histogram_(serie = 'hr', name = 'Frequency') |> 
+  echarts4r::e_color(color = '#44acb4') |> 
   echarts4r::e_legend(show = FALSE) |> 
   echarts4r::e_axis_labels(x = 'Hour') |> 
   echarts4r::e_title(text = 'Time of day I go for shopping') |> 
