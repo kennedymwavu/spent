@@ -9,101 +9,21 @@ analysis_server <- function(id, post_url) {
   moduleServer(
     id = id, 
     module = function(input, output, session) {
-      observeEvent(input$submit, {
-        # Start displaying errors in the UI:
-        iv$enable()
-        
-        # first make sure all inputs are supplied:
-        if (!isTruthy(iv$is_valid())) {
-          # show warning:
-          shinytoastr::toastr_warning(
-            message = 'Please make sure all inputs are valid', 
-            title = 'Validation Error'
-          )
-          
-          # reset loading btn:
-          shinyFeedback::resetLoadingButton(
-            inputId = 'submit', 
-            session = session
-          )
-          
-          return(NULL)
-        }
-        
-        # if all is well, continue:
-        tryCatch(
-          expr = {
-            r <- httr::POST(
-              url = post_url, 
-              body = list(
-                fullnames = input$fullnames, 
-                email = input$email, 
-                phone = input$phone, 
-                address = input$address
-              ), 
-              encode = 'json'
-            )
-            
-            # get message/content returned by the request:
-            msg <- httr::content(r, as = 'raw') |> rawToChar()
-            
-            # Throw error or warning when necessary:
-            httr::stop_for_status(r)
-            httr::warn_for_status(r)
-            
-            # If okay, show user success:
-            shinytoastr::toastr_success(
-              message = httr::content(r)$Message,
-              title = 'Success!', 
-              progressBar = TRUE, 
-              closeButton = TRUE
-            )
-            
-            # reset loading btn:
-            shinyFeedback::resetLoadingButton(
-              inputId = 'submit', 
-              session = session
-            )
-          }, 
-          
-          error = function(cond) {
-            shinytoastr::toastr_error(
-              message = msg, 
-              closeButton = TRUE
-            )
-            
-            # reset loading btn:
-            shinyFeedback::resetLoadingButton(
-              inputId = 'submit', 
-              session = session
-            )
-            
-            # print the error on console for debugging:
-            print(cond)
-          }, 
-          
-          warning = function(cond) {
-            shinytoastr::toastr_warning(
-              message = msg, 
-              closeButton = TRUE
-            )
-            
-            # print warning on console for debugging:
-            print(cond)
-          }
-        )
+      output$plt_amt_per_month <- echarts4r::renderEcharts4r({
+        plt_amt_per_month
       })
       
-      # input validation----
-      # 1. Create an InputValidator object:
-      iv <- shinyvalidate::InputValidator$new()
+      output$plt_top_n_items <- echarts4r::renderEcharts4r({
+        plt_top_n_items
+      })
       
-      # 2. Add validation rules
-      iv$add_rule('fullnames', shinyvalidate::sv_required())
-      iv$add_rule('email', shinyvalidate::sv_required())
-      iv$add_rule('email', shinyvalidate::sv_email())
-      iv$add_rule('phone', shinyvalidate::sv_required())
-      iv$add_rule('address', shinyvalidate::sv_required())
+      output$plt_store_freq <- echarts4r::renderEcharts4r({
+        plt_store_freq
+      })
+      
+      output$plt_hr_freq <- echarts4r::renderEcharts4r({
+        plt_hr_freq
+      })
     }
   )
 }
