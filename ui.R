@@ -1,5 +1,6 @@
 ui <- bootstrapPage(
-  theme = shinythemes::shinytheme('journal'),
+  # theme = shinythemes::shinytheme('journal'),
+  theme = bslib::bs_theme(version = 5, bootswatch = 'default'), 
   title = 'Spent', 
   
   shinyjs::useShinyjs(), 
@@ -38,18 +39,21 @@ ui <- bootstrapPage(
     )
   ), 
   
-  navbarPage(
-    title = 'Spent', 
-    collapsible = TRUE, 
+  tabsetPanel(
+    id = 'tab_container', 
     
     tabPanel(
       title = 'Analysis', 
+      value = 'analysis', 
+      icon = icon('bar-chart-o'), 
       
       analysis_ui(id = 'analysis')
     ), 
     
     tabPanel(
       title = 'Records', 
+      value = 'records', 
+      icon = icon('table'), 
       
       records_ui(id = 'records')
     )
