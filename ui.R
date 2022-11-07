@@ -1,4 +1,4 @@
-ui <- bootstrapPage(
+ui <- bslib::page(
   # theme = shinythemes::shinytheme('journal'),
   theme = bslib::bs_theme(version = 5, bootswatch = 'default'), 
   title = 'Spent', 
