@@ -10,7 +10,7 @@ analysis_server <- function(id, post_url) {
     id = id, 
     module = function(input, output, session) {
       output$plt_top_n_items <- echarts4r::renderEcharts4r({
-        n <- input$top_n_items
+        n <- as.numeric(input$top_n_items)
         
         req(n)
         
