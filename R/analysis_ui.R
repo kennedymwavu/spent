@@ -46,7 +46,15 @@ analysis_ui <- function(id) {
       
       plt_amt_per_month, 
       
-      plt_top_n_items, 
+      selectInput(
+        inputId = ns(id = 'top_n_items'), 
+        label = 'N', 
+        # the least to compare is 3 items:
+        choices = seq_along(items[, unique(item)])[-c(1:2)] |> as.character(), 
+        selected = '5'
+      ), 
+      
+      echarts4r::echarts4rOutput(outputId = ns(id = 'plt_top_n_items')), 
       
       plt_store_freq, 
       

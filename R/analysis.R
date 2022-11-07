@@ -47,6 +47,7 @@ amt_per_month_dt <- DT::datatable(
     columns = c('amount'), 
     currency = ''
   )
+
 # on average:
 avg_per_month <- amt_per_month[, mean(amount, na.rm = TRUE)]
 
@@ -195,20 +196,7 @@ items <- data.table::copy(spt)[
   item := 'Harpic'
 ]
 
-# top n most bought items:
-n <- 10
-
-plt_top_n_items <- items[, list(freq = .N), by = 'item'][
-  order(-freq), .SD[seq_len(n)]
-][order(freq)] |> 
-  echarts4r::e_charts_(x = 'item') |> 
-  echarts4r::e_bar_(serie = 'freq', name = 'Item') |> 
-  echarts4r::e_color(color = '#44acb4') |> 
-  echarts4r::e_legend(show = FALSE) |> 
-  echarts4r::e_title(text = 'Item Frequency') |> 
-  echarts4r::e_tooltip(trigger = 'item') |> 
-  echarts4r::e_flip_coords() |> 
-  echarts4r::e_toolbox_feature(feature = "saveAsImage")
+# top n most bought items plot: analysis_server 'plt_top_n_items'
 
 # Most expensive item?
 spt[, .SD[which.max(amount)]]
