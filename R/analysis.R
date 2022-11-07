@@ -198,14 +198,17 @@ items <- data.table::copy(spt)[
 
 # top n most bought items plot: analysis_server 'plt_top_n_items'
 
+# most bought item:
+most_bought_item <- items[
+  , 
+  list(freq = .N), by = 'item'][, .SD[which.max(freq)]
+]
+
 # Most expensive item?
-spt[, .SD[which.max(amount)]]
+most_expensive_item <- spt[, .SD[which.max(amount)]]
 
-# Top n most expensive items I've bought
-n <- 5
-
-tbl_top_most_expensive_items <- 
-spt[order(-price), .SD[seq_len(n)], .SDcols = -c('datetime')]
+# Top n most expensive items I've bought: 
+# analysis_server 'top_most_expensive_items'
 
 # Least expensive item?
 spt[, .SD[which.min(amount)]]

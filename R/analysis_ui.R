@@ -46,6 +46,36 @@ analysis_ui <- function(id) {
       
       plt_amt_per_month, 
       
+      bslib::value_box(
+        title = 'Most Frequently Bought Item',
+        value = most_bought_item[, c(item)], 
+        showcase = icon(
+          name = 'basket-shopping', 
+          class = 'fa-solid fa-basket-shopping'
+        ), 
+        showcase_layout = bslib::showcase_left_center(), 
+        tags$p(
+          paste0(most_bought_item[, c(freq)], ' Times')
+        ), 
+        full_screen = FALSE, 
+        theme_color = 'primary'
+      ), 
+      
+      bslib::value_box(
+        title = 'Most Expensive Item Bought',
+        value = most_expensive_item[, c(item)], 
+        showcase = icon(
+          name = 'money-bill-trend-up', 
+          class = 'fa-solid fa-money-bill-trend-up'
+        ), 
+        showcase_layout = bslib::showcase_left_center(), 
+        tags$p(
+          format_currency(most_expensive_item[, c(amount)])
+        ), 
+        full_screen = FALSE, 
+        theme_color = 'primary'
+      ), 
+      
       selectInput(
         inputId = ns(id = 'top_n_items'), 
         label = 'N', 
@@ -55,6 +85,8 @@ analysis_ui <- function(id) {
       ), 
       
       echarts4r::echarts4rOutput(outputId = ns(id = 'plt_top_n_items')), 
+      
+      DT::DTOutput(outputId = ns(id = 'top_most_expensive_items')), 
       
       plt_store_freq, 
       
