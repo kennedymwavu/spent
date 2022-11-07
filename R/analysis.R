@@ -25,6 +25,30 @@ spt[, month := format(x = datetime, '%b %Y')]
 
 # how much per month?
 amt_per_month <- spt[, .(amount = sum(amount)), by = 'month']
+amt_per_month_dt <- DT::datatable(
+  data = amt_per_month, 
+  rownames = FALSE, 
+  colnames = c('Month', 'Amount'), 
+  escape = FALSE, 
+  selection = 'single', 
+  class = c('display', 'nowrap'), 
+  options = list(
+    processing = FALSE, 
+    scrollX = TRUE, 
+    lengthChange = FALSE, 
+    columnDefs = list(
+      list(
+        className = 'dt-center', targets = '_all'
+      )
+    )
+  )
+) |> 
+  DT::formatCurrency(
+    columns = c('amount'), 
+    currency = ''
+  )
+# on average:
+avg_per_month <- amt_per_month[, mean(amount, na.rm = TRUE)]
 
 plt_amt_per_month <- amt_per_month[
   , 
