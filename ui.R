@@ -45,7 +45,7 @@ ui <- bootstrapPage(
     tabPanel(
       title = 'Analysis', 
       value = 'analysis', 
-      icon = icon('bar-chart-o'), 
+      icon = tags$i(class = 'fa-solid fa-chart-simple'), 
       
       analysis_ui(id = 'analysis')
     ), 
