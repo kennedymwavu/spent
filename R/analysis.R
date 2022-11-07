@@ -11,6 +11,10 @@ spt[, amount := qty * price]
 spt[
   store == 'Eastleigh Mattresses Limited - Kitengela', 
   store := 'EastMatt - Kitengela'
+][
+  # safaricom house:
+  grep(pattern = 'safaricom', x = store, ignore.case = TRUE), 
+  store := 'Safaricom HSE'
 ]
 
 # arrange rows by datetime:
@@ -217,14 +221,44 @@ spt[, .SD[which.min(amount)]]
 # first count by datetime & store, then count by store alone:
 plt_store_freq <- spt[, list(freq = .N), by = c('datetime', 'store')][
   , list(freq = .N), by = 'store'
-  ][order(freq)] |> 
+  ][, freq := round(freq, digits = 2)][
+    store == 'Text Book Centre Limited (TBC CBD)', 
+    store := 'TBC CBD'
+  ] |> 
   echarts4r::e_charts_(x = 'store') |> 
-  echarts4r::e_bar_(serie = 'freq', name = 'Store') |> 
-  echarts4r::e_color(color = '#44acb4') |> 
+  echarts4r::e_pie_(
+    serie = 'freq', 
+    name = '', 
+    emphasis = list(
+      itemStyle = list(
+        shadowBlur = 10, 
+        shadowOffsetX = 0, 
+        shadowColor = 'rgba(0, 0, 0, 0.5)'
+      )
+    ), 
+    label = list(formatter = '{b}: {d}%'), 
+    encode = list(itemName = 'store', value = 'freq', tooltip = 'freq'), 
+    # radius = '50%', 
+    center = c('50%', '50%')
+  ) |> 
+  echarts4r::e_tooltip(
+    trigger = 'item', 
+    valueFormatter = htmlwidgets::JS(
+      "function(value) {
+        if (value == 1) {
+          return(value + ' time')
+        }
+        
+        return(value + ' times')
+      }"
+    )
+    # showContent = FALSE
+  ) |> 
   echarts4r::e_legend(show = FALSE) |> 
-  echarts4r::e_title(text = 'Frequency at each store') |> 
-  echarts4r::e_tooltip(trigger = 'item') |> 
-  echarts4r::e_flip_coords() |> 
+  echarts4r::e_title(
+    text = 'Store Frequency', 
+    left = 'center'
+  ) |> 
   echarts4r::e_toolbox_feature(feature = "saveAsImage")
 
 # Which hour of the day do I mostly go for shopping?
