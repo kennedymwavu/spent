@@ -181,7 +181,7 @@ plt_top_n_items <- items[, list(freq = .N), by = 'item'][
   echarts4r::e_bar_(serie = 'freq', name = 'Item') |> 
   echarts4r::e_color(color = '#44acb4') |> 
   echarts4r::e_legend(show = FALSE) |> 
-  echarts4r::e_title(text = 'Most Bought Items By Frequency') |> 
+  echarts4r::e_title(text = 'Item Frequency') |> 
   echarts4r::e_tooltip(trigger = 'item') |> 
   echarts4r::e_flip_coords() |> 
   echarts4r::e_toolbox_feature(feature = "saveAsImage")
@@ -198,7 +198,7 @@ spt[order(-price), .SD[seq_len(n)], .SDcols = -c('datetime')]
 # Least expensive item?
 spt[, .SD[which.min(amount)]]
 
-# store frequency:
+# store frequency: pie chart of percentages
 # first count by datetime & store, then count by store alone:
 plt_store_freq <- spt[, list(freq = .N), by = c('datetime', 'store')][
   , list(freq = .N), by = 'store'
