@@ -61,6 +61,7 @@ analysis_server <- function(id, post_url) {
             style = 'caption-side: top;'
           ), 
           options = list(
+            searching = FALSE, 
             processing = FALSE, 
             paging = FALSE, 
             ordering = FALSE, 
