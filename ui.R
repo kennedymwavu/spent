@@ -1,5 +1,5 @@
 ui <- bslib::page(
-  theme = bslib::bs_theme(version = 5, bootswatch = 'default'),
+  theme = bslib::bs_theme(version = 5, bootswatch = 'zephyr'),
   title = 'Spent', 
   
   shinyjs::useShinyjs(), 
