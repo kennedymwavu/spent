@@ -12,23 +12,11 @@ analysis_ui <- function(id) {
       class = 'mycontainer',
       
       bslib::card(
-        bslib::card_header('Monthly Stats'), 
+        bslib::card_title('Monthly stats'), 
         
         bslib::card_body_fill(
           bslib::layout_column_wrap(
             width = '400px', 
-            
-            bslib::value_box(
-              title = 'Average per month',
-              value = format_currency(avg_per_month),
-              showcase = icon(
-                name = 'hand-holding-dollar', 
-                class = 'fa-icon fa-hand-holding-dollar'
-              ),
-              showcase_layout = bslib::showcase_left_center(), 
-              full_screen = FALSE, 
-              theme_color = 'primary'
-            ), 
             
             bslib::layout_column_wrap(
               width = 1, 
@@ -40,7 +28,7 @@ analysis_ui <- function(id) {
                 showcase_layout = bslib::showcase_left_center(), 
                 tags$p(highest_spending_month[, c(month)]), 
                 full_screen = FALSE, 
-                theme_color = 'primary'
+                theme_color = 'info'
               ), 
               
               bslib::value_box(
@@ -53,8 +41,20 @@ analysis_ui <- function(id) {
                 showcase_layout = bslib::showcase_left_center(), 
                 tags$p(least_spending_month[, c(month)]), 
                 full_screen = FALSE, 
-                theme_color = 'primary'
+                theme_color = 'info'
               )
+            ), 
+            
+            bslib::value_box(
+              title = 'Average per month',
+              value = format_currency(avg_per_month),
+              showcase = icon(
+                name = 'hand-holding-dollar', 
+                class = 'fa-icon fa-hand-holding-dollar'
+              ),
+              showcase_layout = bslib::showcase_left_center(), 
+              full_screen = FALSE, 
+              theme_color = 'primary'
             )
           ), 
           
@@ -75,7 +75,7 @@ analysis_ui <- function(id) {
       ), 
       
       bslib::card(
-        bslib::card_header('Item Stats'), 
+        bslib::card_title('Item Stats'), 
         
         bslib::card_body_fill(
           bslib::layout_column_wrap(
@@ -93,7 +93,7 @@ analysis_ui <- function(id) {
                 paste0(most_bought_item[, c(freq)], ' Times')
               ), 
               full_screen = FALSE, 
-              theme_color = 'primary'
+              theme_color = 'warning'
             ), 
             
             bslib::value_box(
@@ -108,7 +108,7 @@ analysis_ui <- function(id) {
                 format_currency(most_expensive_item[, c(amount)])
               ), 
               full_screen = FALSE, 
-              theme_color = 'primary'
+              theme_color = 'success'
             )
           ), 
           
