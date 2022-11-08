@@ -15,6 +15,10 @@ spt[
   # safaricom house:
   grep(pattern = 'safaricom', x = store, ignore.case = TRUE), 
   store := 'Safaricom HSE'
+][
+  # Joy Super Bites Mandazi 180G:
+  grep(pattern = 'Joy Super Bites Mandazi 180G', x = item, ignore.case = TRUE), 
+  item := 'Joy Bites'
 ]
 
 # arrange rows by datetime:
@@ -219,12 +223,18 @@ spt[, .SD[which.min(amount)]]
 
 # store frequency: pie chart of percentages
 # first count by datetime & store, then count by store alone:
-plt_store_freq <- spt[, list(freq = .N), by = c('datetime', 'store')][
+store_freq <- spt[, list(freq = .N), by = c('datetime', 'store')][
   , list(freq = .N), by = 'store'
-  ][, freq := round(freq, digits = 2)][
-    store == 'Text Book Centre Limited (TBC CBD)', 
-    store := 'TBC CBD'
-  ] |> 
+][, freq := round(freq, digits = 2)][
+  store == 'Text Book Centre Limited (TBC CBD)', 
+  store := 'TBC CBD'
+]
+
+store_freq[, percent := round(freq / sum(freq), digits = 2)]
+
+most_freq_store <- store_freq[, .SD[which.max(freq)]]
+
+plt_store_freq <- store_freq |> 
   echarts4r::e_charts_(x = 'store') |> 
   echarts4r::e_pie_(
     serie = 'freq', 
@@ -262,9 +272,30 @@ plt_store_freq <- spt[, list(freq = .N), by = c('datetime', 'store')][
   echarts4r::e_toolbox_feature(feature = "saveAsImage")
 
 # Which hour of the day do I mostly go for shopping?
-plt_hr_freq <- spt[, .N, by = 'datetime'][
+morning <- 0:11
+afternoon <- 12:16
+evening <- c(17:23)
+
+day_hrs <- c(
+  rep('Morning', times = length(morning)), 
+  rep('Afternoon', times = length(afternoon)), 
+  rep('Evening', times = length(evening))
+)
+
+names(day_hrs) <- as.character(0:23)
+
+hr_freq <- spt[, .N, by = 'datetime'][
   , list(hr = lubridate::hour(datetime))
-] |> 
+]
+
+most_freq_hr <- hr_freq[, list(freq = .N), by = 'hr'][, .SD[which.max(freq)]][
+  , 
+  c(hr)
+]
+
+day_label <- day_hrs[as.character(most_freq_hr)]
+
+plt_hr_freq <- hr_freq |> 
   echarts4r::e_charts_() |> 
   echarts4r::e_histogram_(serie = 'hr', name = 'Frequency') |> 
   echarts4r::e_color(color = '#44acb4') |> 
