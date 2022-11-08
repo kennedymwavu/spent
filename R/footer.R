@@ -16,19 +16,16 @@ footer <- function() {
           tags$div(
             class = 'footer-col', 
             
-            tags$h4('company'), 
+            tags$h4('kennedy mwavu'), 
             tags$ul(
               tags$li(
-                tags$a(href = '#', 'about us')
+                tags$a(href = 'https://www.mwavu.com/#intro', 'about me')
               ), 
               tags$li(
-                tags$a(href = '#', 'our services')
+                tags$a(href = 'https://www.mwavu.com/#work', 'work experience')
               ), 
               tags$li(
-                tags$a(href = '#', 'privacy policy')
-              ), 
-              tags$li(
-                tags$a(href = '#', 'affiliate program')
+                tags$a(href = 'https://www.mwavu.com/#projects', 'projects')
               )
             )
           ), 
@@ -36,22 +33,13 @@ footer <- function() {
           tags$div(
             class = 'footer-col', 
             
-            tags$h4('get help'), 
+            tags$h4('online sites'), 
             tags$ul(
               tags$li(
-                tags$a(href = '#', 'FAQ')
+                tags$a(href = 'https://blog.mwavu.com/', 'blog')
               ), 
               tags$li(
-                tags$a(href = '#', 'shipping')
-              ), 
-              tags$li(
-                tags$a(href = '#', 'returns')
-              ), 
-              tags$li(
-                tags$a(href = '#', 'order status')
-              ), 
-              tags$li(
-                tags$a(href = '#', 'payment options')
+                tags$a(href = 'https://www.mwavu.com/#', 'website')
               )
             )
           ), 
@@ -59,27 +47,7 @@ footer <- function() {
           tags$div(
             class = 'footer-col', 
             
-            tags$h4('online shop'), 
-            tags$ul(
-              tags$li(
-                tags$a(href = '#', 'watch')
-              ), 
-              tags$li(
-                tags$a(href = '#', 'bag')
-              ), 
-              tags$li(
-                tags$a(href = '#', 'shoes')
-              ), 
-              tags$li(
-                tags$a(href = '#', 'dress')
-              )
-            )
-          ), 
-          
-          tags$div(
-            class = 'footer-col', 
-            
-            tags$h4('follow us'), 
+            tags$h4('follow me'), 
             
             tags$div(
               class = 'social-links', 
