@@ -13,22 +13,41 @@ analysis_server <- function(id, post_url) {
         plt_amt_per_month
       })
       
-      output$plt_top_n_items <- echarts4r::renderEcharts4r({
+      top_n_items <- reactive({
         n <- as.numeric(input$top_n_items)
         
         req(n)
         
+        return(n)
+      })
+      
+      output$card_header_plt_top_n_items <- renderText({
+        paste0(
+          'Top ', top_n_items(), ' most bought items'
+        )
+      })
+      
+      output$plt_top_n_items <- echarts4r::renderEcharts4r({
         items[, list(freq = .N), by = 'item'][
-          order(-freq), .SD[seq_len(n)]
+          order(-freq), .SD[seq_len(top_n_items())]
         ][order(freq)] |> 
-          echarts4r::e_charts_(x = 'item') |> 
+          echarts4r::e_charts_(
+            x = 'item', 
+            grid = list(
+              left = '3%',
+              right = '4%',
+              bottom = '3%',
+              containLabel = TRUE
+            )
+          ) |> 
           echarts4r::e_bar_(serie = 'freq', name = 'Item') |> 
           echarts4r::e_color(color = '#44acb4') |> 
           echarts4r::e_legend(show = FALSE) |> 
           echarts4r::e_title(
             text = paste0(
-              'Top ', n, ' Most Bought Items'
-            )
+              'Top ', top_n_items(), ' most bought items'
+            ), 
+            show = FALSE
           ) |> 
           echarts4r::e_tooltip(trigger = 'item') |> 
           echarts4r::e_flip_coords() |> 
@@ -36,14 +55,10 @@ analysis_server <- function(id, post_url) {
       })
       
       output$top_most_expensive_items <- DT::renderDT({
-        n <- as.numeric(input$top_n_items)
-        
-        req(n)
-        
         tbl_top_most_expensive_items <- 
           unique(items, by = 'item')[
             order(-price), 
-            .SD[seq_len(n)], 
+            .SD[seq_len(top_n_items())], 
             .SDcols = -c('datetime')
           ][, list(item, amount, month)]
         
@@ -60,7 +75,7 @@ analysis_server <- function(id, post_url) {
           class = c('display', 'nowrap', 'compact'), 
           caption = tags$caption(
             paste0(
-              'Top ', n, ' Most Expensive Items'
+              'Top ', top_n_items(), ' most expensive items'
             ), 
             
             style = 'caption-side: top;'

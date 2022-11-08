@@ -68,10 +68,31 @@ plt_amt_per_month <- amt_per_month[
     amount
   )
 ] |> 
-  echarts4r::e_charts_(x = 'month') |> 
-  echarts4r::e_line_(serie = 'amount', smooth = TRUE, name = 'Amount') |> 
+  echarts4r::e_charts_(
+    x = 'month', 
+    grid = list(
+      left = '3%',
+      right = '4%',
+      bottom = '3%',
+      containLabel = TRUE
+    )
+  ) |> 
+  echarts4r::e_line_(
+    serie = 'amount', 
+    smooth = TRUE, 
+    name = 'Amount'
+  ) |> 
+  echarts4r::e_x_axis_(
+    axisLabel = list(
+      interval = 0, 
+      rotate = 30
+    )
+  ) |> 
   echarts4r::e_color(color = '#44acb4') |> 
-  echarts4r::e_title(text = 'Amount Per Month') |> 
+  echarts4r::e_title(
+    text = 'Amount Per Month', 
+    show = FALSE
+  ) |> 
   echarts4r::e_legend(show = FALSE) |> 
   echarts4r::e_tooltip(
     trigger = 'item', 
@@ -235,7 +256,15 @@ store_freq[, percent := round(freq / sum(freq), digits = 2)]
 most_freq_store <- store_freq[, .SD[which.max(freq)]]
 
 plt_store_freq <- store_freq |> 
-  echarts4r::e_charts_(x = 'store') |> 
+  echarts4r::e_charts_(
+    x = 'store', 
+    grid = list(
+      left = '3%',
+      right = '4%',
+      bottom = '3%',
+      containLabel = TRUE
+    )
+  ) |> 
   echarts4r::e_pie_(
     serie = 'freq', 
     name = '', 
@@ -244,11 +273,19 @@ plt_store_freq <- store_freq |>
         shadowBlur = 10, 
         shadowOffsetX = 0, 
         shadowColor = 'rgba(0, 0, 0, 0.5)'
+      ), 
+      
+      label = list(
+        show = TRUE, 
+        fontSize = '40%', 
+        fontWeight = 'bold'
       )
     ), 
-    label = list(formatter = '{b}: {d}%'), 
+    labelLine = list(show = FALSE), 
+    label = list(formatter = '{b}: {d}%', show = FALSE, position = 'center'), 
+    avoidLabelOverlap = TRUE, 
     encode = list(itemName = 'store', value = 'freq', tooltip = 'freq'), 
-    radius = '90%',
+    radius = c('40%', '70%'),
     center = c('50%', '50%')
   ) |> 
   echarts4r::e_tooltip(
@@ -261,8 +298,8 @@ plt_store_freq <- store_freq |>
         
         return(value + ' times')
       }"
-    )
-    # showContent = FALSE
+    ), 
+    showContent = FALSE
   ) |> 
   echarts4r::e_legend(show = FALSE) |> 
   echarts4r::e_title(
@@ -297,12 +334,22 @@ most_freq_hr <- hr_freq[, list(freq = .N), by = 'hr'][, .SD[which.max(freq)]][
 day_label <- day_hrs[as.character(most_freq_hr)]
 
 plt_hr_freq <- hr_freq |> 
-  echarts4r::e_charts_() |> 
+  echarts4r::e_charts_(
+    grid = list(
+      left = '3%',
+      right = '4%',
+      bottom = '3%',
+      containLabel = TRUE
+    )
+  ) |> 
   echarts4r::e_histogram_(serie = 'hr', name = 'Frequency') |> 
   echarts4r::e_color(color = '#44acb4') |> 
   echarts4r::e_legend(show = FALSE) |> 
   echarts4r::e_axis_labels(x = 'Hour') |> 
-  echarts4r::e_title(text = 'Time of day I go for shopping') |> 
+  echarts4r::e_title(
+    text = 'Time of day I go for shopping', 
+    show = FALSE
+  ) |> 
   echarts4r::e_tooltip(trigger = 'item') |> 
   echarts4r::e_toolbox_feature(feature = "saveAsImage")
 
