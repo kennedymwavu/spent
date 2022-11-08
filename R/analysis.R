@@ -248,7 +248,7 @@ plt_store_freq <- store_freq |>
     ), 
     label = list(formatter = '{b}: {d}%'), 
     encode = list(itemName = 'store', value = 'freq', tooltip = 'freq'), 
-    # radius = '50%', 
+    radius = '90%',
     center = c('50%', '50%')
   ) |> 
   echarts4r::e_tooltip(
@@ -267,7 +267,8 @@ plt_store_freq <- store_freq |>
   echarts4r::e_legend(show = FALSE) |> 
   echarts4r::e_title(
     text = 'Store Frequency', 
-    left = 'center'
+    left = 'center', 
+    show = FALSE
   ) |> 
   echarts4r::e_toolbox_feature(feature = "saveAsImage")
 
