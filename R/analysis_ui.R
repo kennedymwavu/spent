@@ -12,7 +12,7 @@ analysis_ui <- function(id) {
       class = 'mycontainer',
       
       bslib::layout_column_wrap(
-        width = '300px', 
+        width = '400px', 
         
         bslib::value_box(
           title = 'Average Per Month',
@@ -54,11 +54,11 @@ analysis_ui <- function(id) {
       tags$div(
         class = 'container', 
         
-        plt_amt_per_month
+        echarts4r::echarts4rOutput(outputId = ns(id = 'plt_amt_per_month'))
       ), 
       
       bslib::layout_column_wrap(
-        width = 1 / 2, 
+        width = '400px', 
         
         bslib::value_box(
           title = 'Most Frequently Bought Item',
@@ -91,68 +91,73 @@ analysis_ui <- function(id) {
         )
       ), 
       
+      selectInput(
+        inputId = ns(id = 'top_n_items'), 
+        label = 'N', 
+        # the least to compare is 3 items:
+        choices = seq_along(items[, unique(item)])[-c(1:2)] |> as.character(), 
+        selected = '5'
+      ), 
+      
+      bslib::layout_column_wrap(
+        width = '400px', 
+        
+        echarts4r::echarts4rOutput(outputId = ns(id = 'plt_top_n_items')), 
+        
+        tags$div(
+          align = 'center', 
+          
+          DT::DTOutput(
+            outputId = ns(id = 'top_most_expensive_items'), 
+            width = '600px'
+          )
+        )
+      ), 
+      
       bslib::layout_column_wrap(
         width = 1 / 2, 
         
         tags$div(
-          selectInput(
-            inputId = ns(id = 'top_n_items'), 
-            label = 'N', 
-            # the least to compare is 3 items:
-            choices = seq_along(items[, unique(item)])[-c(1:2)] |> as.character(), 
-            selected = '5'
+          bslib::value_box(
+            title = 'Most Frequented Store', 
+            value = most_freq_store[, c(store)], 
+            showcase = icon(
+              name = 'store', 
+              class = 'fa-solid fa-store'
+            ), 
+            showcase_layout = bslib::showcase_left_center(), 
+            tags$p(
+              paste0(
+                most_freq_store[, c(percent * 100)], 
+                '% of the times'
+              )
+            ), 
+            full_screen = FALSE, 
+            theme_color = 'primary', 
+            height = '200px'
           ), 
           
-          echarts4r::echarts4rOutput(outputId = ns(id = 'plt_top_n_items'))
+          echarts4r::echarts4rOutput(outputId = ns(id = 'plt_store_freq'))
         ), 
         
-        DT::DTOutput(outputId = ns(id = 'top_most_expensive_items'))
-      ), 
-      
-      bslib::layout_column_wrap(
-        width = 1 / 2, 
-        fill = FALSE, 
-        
-        bslib::value_box(
-          title = 'Most Frequented Store', 
-          value = most_freq_store[, c(store)], 
-          showcase = icon(
-            name = 'store', 
-            class = 'fa-solid fa-store'
+        tags$div(
+          bslib::value_box(
+            title = 'Time of day I mostly go for shopping', 
+            value = day_label, 
+            showcase = icon(
+              name = 'clock', 
+              class = 'fa-solid fa-clock'
+            ), 
+            showcase_layout = bslib::showcase_left_center(), 
+            tags$p(
+              'Usually after work'
+            ), 
+            full_screen = FALSE, 
+            theme_color = 'primary', 
+            height = '200px'
           ), 
-          showcase_layout = bslib::showcase_left_center(), 
-          tags$p(
-            paste0(
-              most_freq_store[, c(percent * 100)], 
-              '% of the times'
-            )
-          ), 
-          full_screen = FALSE, 
-          theme_color = 'primary'
-        ), 
-        
-        plt_store_freq
-      ), 
-      
-      bslib::layout_column_wrap(
-        width = 1 / 2, 
-        fill = FALSE, 
-        
-        plt_hr_freq, 
-        
-        bslib::value_box(
-          title = 'Time of day I mostly go for shopping', 
-          value = day_label, 
-          showcase = icon(
-            name = 'clock', 
-            class = 'fa-solid fa-clock'
-          ), 
-          showcase_layout = bslib::showcase_left_center(), 
-          tags$p(
-            'Usually after work'
-          ), 
-          full_screen = FALSE, 
-          theme_color = 'primary'
+          
+          echarts4r::echarts4rOutput(outputId = ns(id = 'plt_hr_freq'))
         )
       )
     )
