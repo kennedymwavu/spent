@@ -19,19 +19,19 @@ modal_dialog <- function(ns, datetime, store, item, qty, price, edit) {
     size = 'm',
     easyClose = TRUE,
     footer = tags$div(
-      class = 'pull-right container', 
+      class = 'd-flex justify-content-end', 
       
       actionButton(
         inputId = ns(id = 'final_edit'),
         label = x,
         icon = icon('edit'),
-        class = 'btn-info'
+        class = 'btn-info m-2'
       ), 
       
       actionButton(
         inputId = ns(id = 'dismiss_modal'),
         label = 'Close',
-        class = 'btn-danger'
+        class = 'btn-danger m-2'
       )
     ), 
     
