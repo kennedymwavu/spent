@@ -1,6 +1,5 @@
 ui <- bslib::page(
-  # theme = shinythemes::shinytheme('journal'),
-  theme = bslib::bs_theme(version = 5, bootswatch = 'default'), 
+  theme = bslib::bs_theme(version = 5, bootswatch = 'default'),
   title = 'Spent', 
   
   shinyjs::useShinyjs(), 
@@ -24,19 +23,7 @@ ui <- bslib::page(
   
   tags$header(
     class = 'text-center', 
-    tags$h2('Home Expenditure Tracker'), 
-    tags$h5(
-      style = 'font-weight: 300;', 
-      
-      'By ', 
-      
-      tags$a(
-        href = 'https://mwavu.com/', 
-        target = '_blank', 
-        style = 'color: #336699;', 
-        'Kennedy Mwavu'
-      )
-    )
+    tags$h2('Home Expenditure Tracker')
   ), 
   
   tabsetPanel(
@@ -46,6 +33,7 @@ ui <- bslib::page(
       title = 'Analysis', 
       value = 'analysis', 
       icon = tags$i(class = 'fa-solid fa-chart-simple'), 
+      class = 'p-3 border border-top-0 rounded-bottom', 
       
       analysis_ui(id = 'analysis')
     ), 
@@ -54,6 +42,7 @@ ui <- bslib::page(
       title = 'Records', 
       value = 'records', 
       icon = icon('table'), 
+      class = 'p-3 border border-top-0 rounded-bottom', 
       
       records_ui(id = 'records')
     )
