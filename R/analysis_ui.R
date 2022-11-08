@@ -143,60 +143,64 @@ analysis_ui <- function(id) {
         )
       ), 
       
-      bslib::layout_column_wrap(
-        width = 1 / 2, 
+      bslib::card(
+        bslib::card_title('Store and time stats'), 
         
-        tags$div(
-          bslib::value_box(
-            title = 'Most frequently visited store', 
-            value = most_freq_store[, c(store)], 
-            showcase = icon(
-              name = 'store', 
-              class = 'fa-solid fa-store'
+        bslib::layout_column_wrap(
+          width = 1 / 2, 
+          
+          tags$div(
+            bslib::value_box(
+              title = 'Most frequently visited store', 
+              value = most_freq_store[, c(store)], 
+              showcase = icon(
+                name = 'store', 
+                class = 'fa-solid fa-store'
+              ), 
+              showcase_layout = bslib::showcase_left_center(), 
+              tags$p(
+                paste0(
+                  most_freq_store[, c(percent * 100)], 
+                  '% of the times'
+                )
+              ), 
+              full_screen = FALSE, 
+              theme_color = 'primary', 
+              height = '200px'
             ), 
-            showcase_layout = bslib::showcase_left_center(), 
-            tags$p(
-              paste0(
-                most_freq_store[, c(percent * 100)], 
-                '% of the times'
+            
+            bslib::card(
+              bslib::card_header('Store frequency'), 
+              
+              bslib::card_body_fill(
+                echarts4r::echarts4rOutput(outputId = ns(id = 'plt_store_freq'))
               )
-            ), 
-            full_screen = FALSE, 
-            theme_color = 'primary', 
-            height = '200px'
-          ), 
-          
-          bslib::card(
-            bslib::card_header('Store frequency'), 
-            
-            bslib::card_body_fill(
-              echarts4r::echarts4rOutput(outputId = ns(id = 'plt_store_freq'))
             )
-          )
-        ), 
-        
-        tags$div(
-          bslib::value_box(
-            title = 'Period of day I mostly go for shopping', 
-            value = day_label, 
-            showcase = icon(
-              name = 'clock', 
-              class = 'fa-solid fa-clock'
-            ), 
-            showcase_layout = bslib::showcase_left_center(), 
-            tags$p(
-              'Usually after work'
-            ), 
-            full_screen = FALSE, 
-            theme_color = 'primary', 
-            height = '200px'
           ), 
           
-          bslib::card(
-            bslib::card_header('Time of day I go for shopping'), 
+          tags$div(
+            bslib::value_box(
+              title = 'Period of day I mostly go for shopping', 
+              value = day_label, 
+              showcase = icon(
+                name = 'clock', 
+                class = 'fa-solid fa-clock'
+              ), 
+              showcase_layout = bslib::showcase_left_center(), 
+              tags$p(
+                'Usually after work'
+              ), 
+              full_screen = FALSE, 
+              theme_color = 'primary', 
+              height = '200px'
+            ), 
             
-            bslib::card_body_fill(
-              echarts4r::echarts4rOutput(outputId = ns(id = 'plt_hr_freq'))
+            bslib::card(
+              bslib::card_header('Time of day I go for shopping'), 
+              
+              bslib::card_body_fill(
+                echarts4r::echarts4rOutput(outputId = ns(id = 'plt_hr_freq'))
+              )
             )
           )
         )

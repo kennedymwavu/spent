@@ -11,46 +11,50 @@ records_ui <- function(id) {
     tags$div(
       class = 'mycontainer', 
       
-      tags$div(
-        class = 'container', 
-        
-        tags$div(
-          class = 'record-btns', 
-          style = 'margin-top: 50px;', 
-          
-          actionButton(
-            inputId = ns(id = 'add_row'),
-            label = 'Add Row',
-            icon = icon('plus'),
-            class = 'btn-success'
-          ), 
-          
-          shinyjs::hidden(
+      bslib::card(
+        bslib::card_body_fill(
+          tags$div(
+            class = 'container', 
+            id = ns(id = 'div_records'), 
+            
             tags$div(
-              id = ns('div_save_btn'), 
+              class = 'record-btns', 
+              style = 'margin-top: 50px;', 
               
-              shinyFeedback::loadingButton(
-                inputId = ns('save'),
-                label = 'Save Changes',
-                loadingLabel = 'Saving...',
-                loadingSpinner = 'sync',
-                class = 'btn btn-info'
+              actionButton(
+                inputId = ns(id = 'add_row'),
+                label = 'Add Row',
+                icon = icon('plus'),
+                class = 'btn-success'
+              ), 
+              
+              shinyjs::hidden(
+                tags$div(
+                  id = ns('div_save_btn'), 
+                  
+                  shinyFeedback::loadingButton(
+                    inputId = ns('save'),
+                    label = 'Save Changes',
+                    loadingLabel = 'Saving...',
+                    loadingSpinner = 'sync',
+                    class = 'btn btn-info'
+                  )
+                )
               )
+            ), 
+            
+            tags$div(
+              style = 'margin-top: 50px;', 
+              
+              DT::DTOutput(outputId = ns(id = 'table')) |> 
+                shinycssloaders::withSpinner(
+                  type = 2, 
+                  color.background = 'white', 
+                  hide.ui = FALSE
+                )
             )
           )
         )
-      ), 
-      
-      tags$div(
-        class = 'container', 
-        style = 'margin-top: 50px;', 
-        
-        DT::DTOutput(outputId = ns(id = 'table'), height = '760px') |> 
-          shinycssloaders::withSpinner(
-            type = 2, 
-            color.background = 'white', 
-            hide.ui = FALSE
-          )
       )
     )
   )
