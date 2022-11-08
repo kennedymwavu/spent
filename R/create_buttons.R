@@ -15,6 +15,7 @@ create_buttons <- function(ns, btn_ids) {
         id = ns(id = paste0('edit_', id)), 
         type = 'button', 
         onclick = 'get_id(this.id)', 
+        title = 'Edit row', 
         tags$i(class = 'fas fa-edit')
       )
       
@@ -23,6 +24,7 @@ create_buttons <- function(ns, btn_ids) {
         id = ns(id = paste0('delete_', id)), 
         type = 'button', 
         onclick = 'get_id(this.id)', 
+        title = 'Delete row', 
         tags$i(class = 'fa fa-trash-alt')
       )
       
