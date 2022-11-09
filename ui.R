@@ -1,5 +1,5 @@
 ui <- bslib::page(
-  theme = bslib::bs_theme(version = 5, bootswatch = 'flatly'),
+  theme = bslib::bs_theme(version = 5, bootswatch = 'yeti'),
   title = 'Spent', 
   
   shinyjs::useShinyjs(), 
@@ -27,33 +27,41 @@ ui <- bslib::page(
     )
   ), 
   
-  tags$header(
-    class = 'text-center', 
-    tags$h2('Home Expenditure Tracker')
-  ), 
-  
-  tabsetPanel(
-    id = 'tab_container', 
+  tags$div(
+    class = 'div_container', 
     
-    tabPanel(
-      title = 'Analysis', 
-      value = 'analysis', 
-      icon = tags$i(class = 'fa-solid fa-chart-simple'), 
-      class = 'p-3 border border-top-0 rounded-bottom', 
+    tags$div(
+      class = 'p-5 mb-1 bg-light', 
       
-      analysis_ui(id = 'analysis')
+      tags$header(
+        class = 'text-center', 
+        tags$h1('Home Expenditure Tracker')
+      )
     ), 
     
-    tabPanel(
-      title = 'Records', 
-      value = 'records', 
-      icon = icon('table'), 
-      class = 'p-3 border border-top-0 rounded-bottom', 
+    tabsetPanel(
+      id = 'tab_container', 
       
-      records_ui(id = 'records')
-    )
-  ), 
-  
-  # footer:
-  footer()
+      tabPanel(
+        title = 'Analysis', 
+        value = 'analysis', 
+        icon = tags$i(class = 'fa-solid fa-chart-simple'), 
+        class = 'p-3 border border-top-0 rounded-bottom', 
+        
+        analysis_ui(id = 'analysis')
+      ), 
+      
+      tabPanel(
+        title = 'Records', 
+        value = 'records', 
+        icon = icon('table'), 
+        class = 'p-3 border border-top-0 rounded-bottom', 
+        
+        records_ui(id = 'records')
+      )
+    ), 
+    
+    # footer:
+    footer()
+  )
 )
