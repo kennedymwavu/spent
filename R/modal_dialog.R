@@ -54,6 +54,17 @@ modal_dialog <- function(ns, datetime, store, item, qty, price, edit) {
           class = 'm-2', 
           
           textInput(
+            inputId = ns(id = 'datetime'),
+            label = 'Date and Time',
+            value = datetime,
+            placeholder = 'yyyy-mm-dd H:M:S'
+          )
+        ), 
+        
+        tags$div(
+          class = 'm-2', 
+          
+          textInput(
             inputId = ns(id = 'store'),
             label = 'Store',
             value = store
