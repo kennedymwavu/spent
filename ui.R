@@ -4,7 +4,13 @@ ui <- bslib::page(
   
   shinyjs::useShinyjs(), 
   shinytoastr::useToastr(), 
+  
   includeScript(path = file.path('www', 'js', 'script.js')), 
+  shinyjs::extendShinyjs(
+    script = file.path('js', 'script.js'), 
+    functions = c()
+  ), 
+  
   includeCSS(path = file.path('www', 'css', 'styles.css')), 
   
   tags$head(
