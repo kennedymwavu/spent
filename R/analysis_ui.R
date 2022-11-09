@@ -77,7 +77,11 @@ analysis_ui <- function(id) {
                   bslib::card_body_fill(
                     echarts4r::echarts4rOutput(
                       outputId = ns(id = 'plt_amt_per_month')
-                    )
+                    ) |> 
+                      shinycssloaders::withSpinner(
+                        type = 2, 
+                        color.background = 'white'
+                      )
                   )
                 )
               )
