@@ -72,7 +72,7 @@ analysis_ui <- function(id) {
                 class = 'container', 
                 
                 bslib::card(
-                  bslib::card_header('Amount per month'), 
+                  bslib::card_title('Amount per month'), 
                   
                   bslib::card_body_fill(
                     echarts4r::echarts4rOutput(
