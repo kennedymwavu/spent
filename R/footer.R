@@ -52,21 +52,25 @@ footer <- function() {
             tags$div(
               class = 'social-links', 
               
-              tags$a(
-                href = 'https://www.facebook.com/profile.php?id=100084291762716', 
-                tags$i(class = 'fab fa-facebook-f')
-              ), 
+              # tags$a(
+              #   href = 'https://www.facebook.com/profile.php?id=100084291762716', 
+              #   tags$i(class = 'fab fa-facebook-f'), 
+              #   title = 'facebook'
+              # ), 
               tags$a(
                 href = 'https://twitter.com/kennedymwavu', 
-                tags$i(class = 'fab fa-twitter')
+                tags$i(class = 'fab fa-twitter'), 
+                title = 'twitter'
               ), 
               tags$a(
                 href = 'https://www.instagram.com/mwavukennedy/', 
-                tags$i(class = 'fab fa-instagram')
+                tags$i(class = 'fab fa-instagram'), 
+                title = 'instagram'
               ), 
               tags$a(
                 href = 'https://www.linkedin.com/in/mwavukennedy/', 
-                tags$i(class = 'fab fa-linkedin-in')
+                tags$i(class = 'fab fa-linkedin-in'), 
+                title = 'linkedin'
               )
             )
           )
