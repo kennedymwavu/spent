@@ -60,17 +60,17 @@ analysis_server <- function(id, post_url) {
         )
       })
       
+      tbl_top_most_expensive_items <- reactive({
+        unique(items, by = 'item')[
+          order(-price), 
+          .SD[seq_len(top_n_items())], 
+          .SDcols = -c('datetime')
+        ][, list(item, amount, month)]
+      })
+      
       output$top_most_expensive_items <- DT::renderDT({
-        tbl_top_most_expensive_items <- 
-          unique(items, by = 'item')[
-            order(-price), 
-            .SD[seq_len(top_n_items())], 
-            .SDcols = -c('datetime')
-          ][, list(item, amount, month)]
-        
-        
         DT::datatable(
-          data = tbl_top_most_expensive_items, 
+          data = isolate(tbl_top_most_expensive_items()), 
           rownames = FALSE, 
           colnames = c(
             'Item', 'Amount', 'Month'
@@ -98,6 +98,17 @@ analysis_server <- function(id, post_url) {
             columns = c('amount'), 
             currency = ''
           )
+      })
+      
+      proxy <- DT::dataTableProxy(outputId = 'top_most_expensive_items')
+      
+      shiny::observe({
+        DT::replaceData(
+          proxy = proxy,
+          data = tbl_top_most_expensive_items(),
+          resetPaging = FALSE,
+          rownames = FALSE
+        )
       })
       
       output$plt_store_freq <- echarts4r::renderEcharts4r({
