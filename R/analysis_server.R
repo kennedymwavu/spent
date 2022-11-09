@@ -54,6 +54,12 @@ analysis_server <- function(id, post_url) {
           echarts4r::e_toolbox_feature(feature = "saveAsImage")
       })
       
+      output$title_top_most_expensive_items <- renderText({
+        paste0(
+          'Top ', top_n_items(), ' most expensive items'
+        )
+      })
+      
       output$top_most_expensive_items <- DT::renderDT({
         tbl_top_most_expensive_items <- 
           unique(items, by = 'item')[
@@ -73,13 +79,6 @@ analysis_server <- function(id, post_url) {
           selection = 'single', 
           fillContainer = FALSE, 
           class = c('display', 'nowrap', 'compact'), 
-          caption = tags$caption(
-            paste0(
-              'Top ', top_n_items(), ' most expensive items'
-            ), 
-            
-            style = 'caption-side: top;'
-          ), 
           options = list(
             searching = FALSE, 
             processing = FALSE, 

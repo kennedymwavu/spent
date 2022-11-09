@@ -12,7 +12,7 @@ analysis_ui <- function(id) {
       class = 'mycontainer',
       
       tags$div(
-        class = 'mb-5 cardcontainer', 
+        class = 'pt-2 pb-3 fade-in', 
         
         bslib::card(
           bslib::card_title('Monthly stats'), 
@@ -87,7 +87,7 @@ analysis_ui <- function(id) {
       ), 
       
       tags$div(
-        class = 'mb-5 cardcontainer', 
+        class = 'pt-2 pb-3 fade-in', 
         
         bslib::card(
           bslib::card_title('Item Stats'), 
@@ -138,7 +138,8 @@ analysis_ui <- function(id) {
                 inputId = ns(id = 'top_n_items'), 
                 label = NULL, 
                 # the least to compare is 3 items:
-                choices = seq_along(items[, unique(item)])[-c(1:2)] |> as.character(), 
+                choices = seq_along(items[, unique(item)])[-c(1:2)] |> 
+                  as.character(), 
                 selected = '5'
               )
             ), 
@@ -151,15 +152,29 @@ analysis_ui <- function(id) {
                   textOutput(outputId = ns(id = 'card_header_plt_top_n_items'))
                 ), 
                 
-                echarts4r::echarts4rOutput(outputId = ns(id = 'plt_top_n_items'))
+                bslib::card_body_fill(
+                  echarts4r::echarts4rOutput(
+                    outputId = ns(id = 'plt_top_n_items')
+                  )
+                )
               ), 
               
-              tags$div(
-                align = 'center', 
+              bslib::card(
+                bslib::card_title(
+                  textOutput(
+                    outputId = ns(id = 'title_top_most_expensive_items')
+                  )
+                ), 
                 
-                DT::DTOutput(
-                  outputId = ns(id = 'top_most_expensive_items'), 
-                  width = '600px'
+                bslib::card_body_fill(
+                  tags$div(
+                    align = 'center', 
+                    
+                    DT::DTOutput(
+                      outputId = ns(id = 'top_most_expensive_items'), 
+                      width = '600px'
+                    )
+                  )
                 )
               )
             )
@@ -168,17 +183,17 @@ analysis_ui <- function(id) {
       ), 
       
       tags$div(
-        class = 'mb-5 cardcontainer', 
+        class = 'pt-2 pb-3 fade-in', 
         
         bslib::card(
           bslib::card_title('Store and time stats'), 
           
-          bslib::layout_column_wrap(
-            width = 1 / 2, 
-            
+          bslib::card_body_fill(
             tags$div(
-              tags$div(
-                class = 'm-2', 
+              class = 'm-2', 
+              
+              bslib::layout_column_wrap(
+                width = '400px', 
                 
                 bslib::value_box(
                   title = 'Most frequently visited store', 
@@ -195,27 +210,8 @@ analysis_ui <- function(id) {
                     )
                   ), 
                   full_screen = FALSE, 
-                  theme_color = 'primary', 
-                  height = '200px'
-                )
-              ), 
-              
-              tags$div(
-                class = 'm-2', 
-                
-                bslib::card(
-                  bslib::card_header('Store frequency'), 
-                  
-                  bslib::card_body_fill(
-                    echarts4r::echarts4rOutput(outputId = ns(id = 'plt_store_freq'))
-                  )
-                )
-              )
-            ), 
-            
-            tags$div(
-              tags$div(
-                class = 'm-2', 
+                  theme_color = 'primary'
+                ), 
                 
                 bslib::value_box(
                   title = 'Period of day I mostly go for shopping', 
@@ -229,8 +225,23 @@ analysis_ui <- function(id) {
                     'Usually after work'
                   ), 
                   full_screen = FALSE, 
-                  theme_color = 'success', 
-                  height = '200px'
+                  theme_color = 'success'
+                )
+              )
+            ), 
+            
+            bslib::layout_column_wrap(
+              width = 1 / 2, 
+              
+              tags$div(
+                class = 'm-2', 
+                
+                bslib::card(
+                  bslib::card_header('Store frequency'), 
+                  
+                  bslib::card_body_fill(
+                    echarts4r::echarts4rOutput(outputId = ns(id = 'plt_store_freq'))
+                  )
                 )
               ), 
               
