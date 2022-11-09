@@ -37,6 +37,16 @@ body {
     margin-bottom: 30px;
 }
 
+.fade-in {
+	opacity: 0;
+	transition: opacity 250ms ease-in;
+}
+
+.fade-in.appear {
+	opacity: 1;
+}
+
+
 .footer-container {
 	max-width: 1170px;
 	margin: auto;
