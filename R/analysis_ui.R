@@ -12,7 +12,7 @@ analysis_ui <- function(id) {
       class = 'mycontainer',
       
       tags$div(
-        class = 'pt-2 pb-3 fade-in', 
+        class = 'pt-2 pb-2 mb-5 fade-in', 
         
         bslib::card(
           bslib::card_title('Monthly stats'), 
@@ -87,7 +87,7 @@ analysis_ui <- function(id) {
       ), 
       
       tags$div(
-        class = 'pt-2 pb-3 fade-in', 
+        class = 'pt-2 pb-2 mb-5 fade-in', 
         
         bslib::card(
           bslib::card_title('Item Stats'), 
@@ -111,7 +111,7 @@ analysis_ui <- function(id) {
                     paste0(most_bought_item[, c(freq)], ' Times')
                   ), 
                   full_screen = FALSE, 
-                  theme_color = 'dark'
+                  theme_color = 'success'
                 ), 
                 
                 bslib::value_box(
@@ -126,7 +126,7 @@ analysis_ui <- function(id) {
                     format_currency(most_expensive_item[, c(amount)])
                   ), 
                   full_screen = FALSE, 
-                  theme_color = 'warning'
+                  theme_color = 'primary'
                 )
               )
             ), 
@@ -183,7 +183,7 @@ analysis_ui <- function(id) {
       ), 
       
       tags$div(
-        class = 'pt-2 pb-3 fade-in', 
+        class = 'pt-2 pb-2 mb-5 fade-in', 
         
         bslib::card(
           bslib::card_title('Store and time stats'), 
@@ -237,7 +237,7 @@ analysis_ui <- function(id) {
                 class = 'm-2', 
                 
                 bslib::card(
-                  bslib::card_header('Store frequency'), 
+                  bslib::card_title('Store frequency'), 
                   
                   bslib::card_body_fill(
                     echarts4r::echarts4rOutput(outputId = ns(id = 'plt_store_freq'))
@@ -249,7 +249,7 @@ analysis_ui <- function(id) {
                 class = 'm-2', 
                 
                 bslib::card(
-                  bslib::card_header('Time of day I go for shopping'), 
+                  bslib::card_title('Time of day I go for shopping'), 
                   
                   bslib::card_body_fill(
                     echarts4r::echarts4rOutput(outputId = ns(id = 'plt_hr_freq'))
