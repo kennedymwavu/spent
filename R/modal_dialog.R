@@ -19,80 +19,76 @@ modal_dialog <- function(ns, datetime, store, item, qty, price, edit) {
     size = 'm',
     easyClose = TRUE,
     footer = tags$div(
-      class = 'd-flex justify-content-end', 
+      class = 'd-flex justify-content-end m-1', 
       
       actionButton(
         inputId = ns(id = 'final_edit'),
         label = x,
-        icon = icon('edit'),
+        icon = icon(
+          name = 'pen-to-square', 
+          class = 'fa-solid fa-pen-to-square'
+        ),
         class = 'btn-info m-2'
       ), 
       
       actionButton(
         inputId = ns(id = 'dismiss_modal'),
-        label = 'Close',
+        label = 'Close', 
+        icon = icon(
+          name = 'x', 
+          class = 'fa-solid fa-x'
+        ), 
         class = 'btn-danger m-2'
       )
     ), 
     
     # modal body:
     tags$div(
-      class = "text-center", 
+      class = 'd-flex justify-content-center', 
       
-      tags$div(
-        style = 'display: inline-block;', 
+      bslib::layout_column_wrap(
+        width = 1, 
+        fill = TRUE, 
         
-        textInput(
-          inputId = ns(id = 'datetime'),
-          label = 'Date and Time',
-          value = datetime,
-          placeholder = 'yyyy-mm-dd H:M:S',
-          width = '200px'
-        )
-      ), 
-      
-      tags$div(
-        style = 'display: inline-block;', 
+        tags$div(
+          class = 'm-2', 
+          
+          textInput(
+            inputId = ns(id = 'store'),
+            label = 'Store',
+            value = store
+          )
+        ), 
         
-        textInput(
-          inputId = ns(id = 'store'),
-          label = 'Store',
-          value = store,
-          width = '200px'
-        )
-      ), 
-      
-      tags$div(
-        style = 'display: inline-block;', 
+        tags$div(
+          class = 'm-2', 
+          
+          textInput(
+            inputId = ns(id = 'item'),
+            label = 'Item',
+            value = item
+          )
+        ), 
         
-        textInput(
-          inputId = ns(id = 'item'),
-          label = 'Item',
-          value = item,
-          width = '200px'
-        )
-      ), 
-      
-      tags$div(
-        style = 'display: inline-block;', 
+        tags$div(
+          class = 'm-2', 
+          
+          shinyWidgets::autonumericInput(
+            inputId = ns(id = 'qty'),
+            label = 'Quantity',
+            value = qty
+          )
+        ), 
         
-        shinyWidgets::autonumericInput(
-          inputId = ns(id = 'qty'),
-          label = 'Quantity',
-          value = qty, 
-          width = '200px'
-        )
-      ), 
-      
-      tags$div(
-        style = 'display: inline-block;', 
-        
-        shinyWidgets::autonumericInput(
-          inputId = ns(id = 'price'),
-          label = 'Price',
-          value = price, 
-          currencySymbol = 'KES ', 
-          width = '200px'
+        tags$div(
+          class = 'm-2', 
+          
+          shinyWidgets::autonumericInput(
+            inputId = ns(id = 'price'),
+            label = 'Price',
+            value = price, 
+            currencySymbol = 'KES '
+          )
         )
       )
     )
