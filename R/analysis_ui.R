@@ -96,44 +96,6 @@ analysis_ui <- function(id) {
             tags$div(
               class = 'm-2', 
               
-              bslib::layout_column_wrap(
-                width = '400px', 
-                
-                bslib::value_box(
-                  title = 'Most frequently bought item',
-                  value = most_bought_item[, c(item)], 
-                  showcase = icon(
-                    name = 'basket-shopping', 
-                    class = 'fa-solid fa-basket-shopping'
-                  ), 
-                  showcase_layout = bslib::showcase_left_center(), 
-                  tags$p(
-                    paste0(most_bought_item[, c(freq)], ' Times')
-                  ), 
-                  full_screen = FALSE, 
-                  theme_color = 'success'
-                ), 
-                
-                bslib::value_box(
-                  title = 'Most expensive item bought',
-                  value = most_expensive_item[, c(item)], 
-                  showcase = icon(
-                    name = 'money-bill-trend-up', 
-                    class = 'fa-solid fa-money-bill-trend-up'
-                  ), 
-                  showcase_layout = bslib::showcase_left_center(), 
-                  tags$p(
-                    format_currency(most_expensive_item[, c(amount)])
-                  ), 
-                  full_screen = FALSE, 
-                  theme_color = 'primary'
-                )
-              )
-            ), 
-            
-            tags$div(
-              class = 'm-2', 
-              
               selectInput(
                 inputId = ns(id = 'top_n_items'), 
                 label = NULL, 
@@ -145,34 +107,88 @@ analysis_ui <- function(id) {
             ), 
             
             bslib::layout_column_wrap(
-              width = '400px', 
+              width = 1 / 2, 
               
-              bslib::card(
-                bslib::card_header(
-                  textOutput(outputId = ns(id = 'card_header_plt_top_n_items'))
+              tags$div(
+                class = 'm-2', 
+                
+                bslib::layout_column_wrap(
+                  width = '400px', 
+                  
+                  bslib::value_box(
+                    title = 'Most frequently bought item',
+                    value = most_bought_item[, c(item)], 
+                    showcase = icon(
+                      name = 'basket-shopping', 
+                      class = 'fa-solid fa-basket-shopping'
+                    ), 
+                    showcase_layout = bslib::showcase_left_center(), 
+                    tags$p(
+                      paste0(most_bought_item[, c(freq)], ' Times')
+                    ), 
+                    full_screen = FALSE, 
+                    theme_color = 'success'
+                  )
                 ), 
                 
-                bslib::card_body_fill(
-                  echarts4r::echarts4rOutput(
-                    outputId = ns(id = 'plt_top_n_items')
+                bslib::layout_column_wrap(
+                  width = 1, 
+                  
+                  bslib::card(
+                    bslib::card_title(
+                      textOutput(outputId = ns(id = 'card_header_plt_top_n_items'))
+                    ), 
+                    
+                    bslib::card_body_fill(
+                      echarts4r::echarts4rOutput(
+                        outputId = ns(id = 'plt_top_n_items')
+                      )
+                    )
                   )
                 )
               ), 
               
-              bslib::card(
-                bslib::card_title(
-                  textOutput(
-                    outputId = ns(id = 'title_top_most_expensive_items')
+              tags$div(
+                class = 'm-2', 
+                
+                bslib::layout_column_wrap(
+                  width = '400px', 
+                  
+                  bslib::value_box(
+                    title = 'Most expensive item bought',
+                    value = most_expensive_item[, c(item)], 
+                    showcase = icon(
+                      name = 'money-bill-trend-up', 
+                      class = 'fa-solid fa-money-bill-trend-up'
+                    ), 
+                    showcase_layout = bslib::showcase_left_center(), 
+                    tags$p(
+                      format_currency(most_expensive_item[, c(amount)])
+                    ), 
+                    full_screen = FALSE, 
+                    theme_color = 'primary'
                   )
                 ), 
                 
-                bslib::card_body_fill(
-                  tags$div(
-                    align = 'center', 
+                bslib::layout_column_wrap(
+                  width = 1, 
+                  
+                  bslib::card(
+                    bslib::card_title(
+                      textOutput(
+                        outputId = ns(id = 'title_top_most_expensive_items')
+                      )
+                    ), 
                     
-                    DT::DTOutput(
-                      outputId = ns(id = 'top_most_expensive_items'), 
-                      width = '600px'
+                    bslib::card_body_fill(
+                      tags$div(
+                        align = 'center', 
+                        
+                        DT::DTOutput(
+                          outputId = ns(id = 'top_most_expensive_items'), 
+                          width = '600px'
+                        )
+                      )
                     )
                   )
                 )
@@ -189,58 +205,44 @@ analysis_ui <- function(id) {
           bslib::card_title('Store and time stats'), 
           
           bslib::card_body_fill(
-            tags$div(
-              class = 'm-2', 
-              
-              bslib::layout_column_wrap(
-                width = '400px', 
-                
-                bslib::value_box(
-                  title = 'Most frequently visited store', 
-                  value = most_freq_store[, c(store)], 
-                  showcase = icon(
-                    name = 'store', 
-                    class = 'fa-solid fa-store'
-                  ), 
-                  showcase_layout = bslib::showcase_left_center(), 
-                  tags$p(
-                    paste0(
-                      most_freq_store[, c(percent * 100)], 
-                      '% of the times'
-                    )
-                  ), 
-                  full_screen = FALSE, 
-                  theme_color = 'primary'
-                ), 
-                
-                bslib::value_box(
-                  title = 'Period of day I mostly go for shopping', 
-                  value = day_label, 
-                  showcase = icon(
-                    name = 'clock', 
-                    class = 'fa-solid fa-clock'
-                  ), 
-                  showcase_layout = bslib::showcase_left_center(), 
-                  tags$p(
-                    'Usually after work'
-                  ), 
-                  full_screen = FALSE, 
-                  theme_color = 'success'
-                )
-              )
-            ), 
-            
             bslib::layout_column_wrap(
               width = 1 / 2, 
               
               tags$div(
                 class = 'm-2', 
                 
-                bslib::card(
-                  bslib::card_title('Store frequency'), 
+                bslib::layout_column_wrap(
+                  width = '400px', 
                   
-                  bslib::card_body_fill(
-                    echarts4r::echarts4rOutput(outputId = ns(id = 'plt_store_freq'))
+                  bslib::value_box(
+                    title = 'Most frequently visited store', 
+                    value = most_freq_store[, c(store)], 
+                    showcase = icon(
+                      name = 'store', 
+                      class = 'fa-solid fa-store'
+                    ), 
+                    showcase_layout = bslib::showcase_left_center(), 
+                    tags$p(
+                      paste0(
+                        most_freq_store[, c(percent * 100)], 
+                        '% of the times'
+                      )
+                    ), 
+                    full_screen = FALSE, 
+                    theme_color = 'primary'
+                  )
+                ), 
+                
+                
+                bslib::layout_column_wrap(
+                  width = 1, 
+                  
+                  bslib::card(
+                    bslib::card_title('Store frequency'), 
+                    
+                    bslib::card_body_fill(
+                      echarts4r::echarts4rOutput(outputId = ns(id = 'plt_store_freq'))
+                    )
                   )
                 )
               ), 
@@ -248,11 +250,34 @@ analysis_ui <- function(id) {
               tags$div(
                 class = 'm-2', 
                 
-                bslib::card(
-                  bslib::card_title('Time of day I go for shopping'), 
+                bslib::layout_column_wrap(
+                  width = '400px', 
                   
-                  bslib::card_body_fill(
-                    echarts4r::echarts4rOutput(outputId = ns(id = 'plt_hr_freq'))
+                  bslib::value_box(
+                    title = 'Period of day I mostly go for shopping', 
+                    value = day_label, 
+                    showcase = icon(
+                      name = 'clock', 
+                      class = 'fa-solid fa-clock'
+                    ), 
+                    showcase_layout = bslib::showcase_left_center(), 
+                    tags$p(
+                      'Usually after work'
+                    ), 
+                    full_screen = FALSE, 
+                    theme_color = 'success'
+                  )
+                ), 
+                
+                bslib::layout_column_wrap(
+                  width = 1, 
+                  
+                  bslib::card(
+                    bslib::card_title('Time of day I go for shopping'), 
+                    
+                    bslib::card_body_fill(
+                      echarts4r::echarts4rOutput(outputId = ns(id = 'plt_hr_freq'))
+                    )
                   )
                 )
               )
