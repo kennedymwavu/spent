@@ -277,13 +277,13 @@ plt_store_freq <- store_freq |>
       
       label = list(
         show = TRUE, 
-        fontSize = '40%', 
+        # fontSize = '40', 
         fontWeight = 'bold'
       )
     ), 
     labelLine = list(show = FALSE), 
     label = list(formatter = '{b}: {d}%', show = FALSE, position = 'center'), 
-    avoidLabelOverlap = TRUE, 
+    avoidLabelOverlap = FALSE, 
     encode = list(itemName = 'store', value = 'freq', tooltip = 'freq'), 
     radius = c('40%', '70%'),
     center = c('50%', '50%')
