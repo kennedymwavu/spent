@@ -3,6 +3,10 @@ function get_id(clicked_id) {
 }
 
 shinyjs.init = function() {
+  // copyrights:
+  document.getElementById('year').innerHTML = new Date().getFullYear();
+  
+  // faders:
   const faders = document.querySelectorAll('.fade-in');
 
   const appearOptions = {
