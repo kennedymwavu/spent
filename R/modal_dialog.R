@@ -12,10 +12,10 @@
 #' @return shiny::modalDialog
 #' @noRd
 modal_dialog <- function(ns, datetime, store, item, qty, price, edit) {
-  x <- if (edit) 'Submit Edits' else 'Add New Row'
+  x <- if (edit) 'Submit' else 'Add New Row'
   
   shiny::modalDialog(
-    title = 'Edit Table', 
+    title = 'Edit record', 
     size = 'm',
     easyClose = TRUE,
     footer = tags$div(
