@@ -35,7 +35,7 @@ ui <- bslib::page(
       
       tags$header(
         class = 'text-center', 
-        tags$h1('Home Expenditure Tracker')
+        tags$h1('Home Expenditure')
       )
     ), 
     
@@ -62,6 +62,21 @@ ui <- bslib::page(
     ), 
     
     # footer:
-    footer()
+    footer(), 
+    
+    # copyright:
+    tags$div(
+      class = 'text-center text-muted bg-dark pt-3 pb-1', 
+      style = 'background-color: black;', 
+      
+      tags$p(
+        shiny::HTML(
+          paste0(
+            'Copyright &copy;<span id = "year"></span>', 
+            '. All rights reserved.'
+          )
+        )
+      )
+    )
   )
 )
