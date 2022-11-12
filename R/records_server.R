@@ -9,6 +9,81 @@ records_server <- function(id) {
     module = function(input, output, session) {
       ns <- NS(id)
       
+      f <- firebase::FirebaseUI$
+        new()$ # instantiate
+        set_providers( # define providers
+          email = TRUE
+        )$
+        launch() # launch
+      
+      observeEvent(f$get_signed_in(), {
+        x <- f$get_signed_in()
+        
+        if (identical(x$response$uid, Sys.getenv('my_uid'))) {
+          shinytoastr::toastr_success(
+            message = 'Signed In!', 
+            closeButton = TRUE, 
+            progressBar = TRUE
+          )
+          
+          updateTabsetPanel(
+            session = session, 
+            inputId = 'tab_set_panel', 
+            selected = 'records'
+          )
+          
+          # jump out of this observeEvent:
+          return(NULL)
+        }
+        
+        # otherwise, if the user is not me:
+        if (isTruthy(x$success)) {
+          shinytoastr::toastr_success(
+            message = 'Signed In!', 
+            closeButton = TRUE, 
+            progressBar = TRUE, 
+            timeOut = 1e5
+          )
+          
+          shinytoastr::toastr_warning(
+            title = 'Save permission denied!', 
+            message = paste0(
+              'There can be only one Lord of the Rings, only one who can bend ', 
+              'them to his will. And he does not share power!'
+            ), 
+            closeButton = TRUE, 
+            timeOut = 0
+          )
+          
+          updateTabsetPanel(
+            session = session, 
+            inputId = 'tab_set_panel', 
+            selected = 'records'
+          )
+          
+          # disable save btn:
+          shinyjs::disable(id = 'save')
+          
+          # jump out of this observeEvent:
+          return(NULL)
+        }
+        
+        # if we haven't yet jumped out of this observeEvent, show error:
+        shinytoastr::toastr_error(
+          message = 'There was an error signing you in', 
+          closeButton = TRUE, 
+          timeOut = 0
+        )
+        
+        updateTabsetPanel(
+          session = session, 
+          inputId = 'tab_set_panel', 
+          selected = 'records'
+        )
+      },
+      ignoreNULL = TRUE
+      )
+      
       rv_table <- reactiveValues(
         tbl = NULL, 
         dt_row = NULL,
@@ -188,27 +263,74 @@ records_server <- function(id) {
       
       # save changes:
       observeEvent(input$save, {
-        spt <- rv_table$tbl[, .SD, .SDcols = -c('Buttons')]
-        data.table::fwrite(x = spt, file = 'spt.csv')
+        x <- f$get_signed_in()
         
-        shinyFeedback::resetLoadingButton(
-          inputId = 'save', 
-          session = session
-        )
+        # if user is not signed in, take them to sign in page:
+        if (!isTruthy(x$success)) {
+          updateTabsetPanel(
+            session = session, 
+            inputId = 'tab_set_panel', 
+            selected = 'sign_in'
+          )
+          
+          # reset loading btn:
+          shinyFeedback::resetLoadingButton(
+            inputId = 'save', 
+            session = session
+          )
+          
+          shinytoastr::toastr_info(
+            message = 'You have to be signed in to save any changes.'
+          )
+          
+          # jump out of this observeEvent:
+          return(NULL)
+        }
         
-        shinytoastr::toastr_success(
-          message = 'Changes Saved!', 
-          position = 'bottom-center', 
-          closeButton = TRUE, 
-          progressBar = TRUE
-        )
+        # if it's me, go ahead and save changes:
+        if (identical(x$response$uid, Sys.getenv('my_uid'))) {
+          spt <- rv_table$tbl[, .SD, .SDcols = -c('Buttons')]
+          data.table::fwrite(x = spt, file = 'spt.csv')
+          
+          shinyFeedback::resetLoadingButton(
+            inputId = 'save', 
+            session = session
+          )
+          
+          shinytoastr::toastr_success(
+            message = 'Changes Saved!', 
+            position = 'bottom-center', 
+            closeButton = TRUE, 
+            progressBar = TRUE
+          )
+          
+          Sys.sleep(1.5)
+          
+          # hide btn after saving:
+          shinyjs::hide(
+            id = 'div_save_btn'
+          )
+          
+          return(NULL)
+        }
         
-        Sys.sleep(1.5)
-        
-        # hide btn after saving:
-        shinyjs::hide(
-          id = 'div_save_btn'
-        )
+        # if user is signed in but it's not me:
+        if (
+          isTruthy(x$success) && 
+          !identical(x$response$uid, Sys.getenv('my_uid'))
+        ) {
+          shinytoastr::toastr_warning(
+            title = 'Save permission denied!', 
+            message = paste0(
+              'There can be only one Lord of the Rings, only one who can bend ', 
+              'them to his will. And he does not share power!'
+            ), 
+            closeButton = TRUE, 
+            timeOut = 0
+          )
+          
+          return(NULL)
+        }
       })
       
       # show save btn when there's a change in table:

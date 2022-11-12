@@ -5,6 +5,8 @@ ui <- bslib::page(
   shinyjs::useShinyjs(), 
   shinytoastr::useToastr(), 
   
+  firebase::useFirebase(), 
+  
   includeScript(path = file.path('www', 'js', 'script.js')), 
   shinyjs::extendShinyjs(
     script = file.path('js', 'script.js'), 
