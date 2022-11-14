@@ -1,8 +1,11 @@
 spt <- data.table::fread(file = 'spt.csv')
-echarts4r::e_common(
-  font_family = "monospace",
-  theme = NULL
-)
+
+# echarts4r::e_common(
+#   font_family = "monospace",
+#   theme = NULL
+# )
+# animation duration of charts, 3secs:
+animation_duration <- 2000
 
 # add amount column:
 spt[, amount := qty * price]
@@ -80,7 +83,8 @@ plt_amt_per_month <- amt_per_month[
   echarts4r::e_line_(
     serie = 'amount', 
     smooth = TRUE, 
-    name = 'Amount'
+    name = 'Amount', 
+    animationDuration = animation_duration
   ) |> 
   echarts4r::e_x_axis_(
     axisLabel = list(
@@ -286,7 +290,8 @@ plt_store_freq <- store_freq |>
     avoidLabelOverlap = FALSE, 
     encode = list(itemName = 'store', value = 'freq', tooltip = 'freq'), 
     radius = c('40%', '70%'),
-    center = c('50%', '50%')
+    center = c('50%', '50%'), 
+    animationDuration = animation_duration
   ) |> 
   echarts4r::e_tooltip(
     trigger = 'item', 
@@ -342,7 +347,11 @@ plt_hr_freq <- hr_freq |>
       containLabel = TRUE
     )
   ) |> 
-  echarts4r::e_histogram_(serie = 'hr', name = 'Frequency') |> 
+  echarts4r::e_histogram_(
+    serie = 'hr', 
+    name = 'Frequency', 
+    animationDuration = animation_duration
+  ) |> 
   echarts4r::e_color(color = '#44acb4') |> 
   echarts4r::e_legend(show = FALSE) |> 
   echarts4r::e_axis_labels(x = 'Hour') |> 
