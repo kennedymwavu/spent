@@ -40,7 +40,11 @@ analysis_server <- function(id, post_url) {
               containLabel = TRUE
             )
           ) |> 
-          echarts4r::e_bar_(serie = 'freq', name = 'Item') |> 
+          echarts4r::e_bar_(
+            serie = 'freq', 
+            name = 'Item', 
+            animationDuration = animation_duration
+          ) |> 
           echarts4r::e_color(color = '#44acb4') |> 
           echarts4r::e_legend(show = FALSE) |> 
           echarts4r::e_title(
