@@ -19,13 +19,13 @@ footer <- function() {
             tags$h4('kennedy mwavu'), 
             tags$ul(
               tags$li(
-                tags$a(href = 'https://www.mwavu.com/#intro', 'about me')
+                tags$a(href = 'https://kennedymwavu.github.io/#intro', 'about me')
               ), 
               tags$li(
-                tags$a(href = 'https://www.mwavu.com/#work', 'work experience')
+                tags$a(href = 'https://kennedymwavu.github.io/#work', 'work experience')
               ), 
               tags$li(
-                tags$a(href = 'https://www.mwavu.com/#projects', 'projects')
+                tags$a(href = 'https://kennedymwavu.github.io/#projects', 'projects')
               )
             )
           ), 
@@ -36,10 +36,10 @@ footer <- function() {
             tags$h4('online sites'), 
             tags$ul(
               tags$li(
-                tags$a(href = 'https://blog.mwavu.com/', 'blog')
+                tags$a(href = 'https://kennedymwavu.hashnode.dev/', 'blog')
               ), 
               tags$li(
-                tags$a(href = 'https://www.mwavu.com/#', 'website')
+                tags$a(href = 'https://kennedymwavu.github.io/#', 'website')
               )
             )
           ), 
