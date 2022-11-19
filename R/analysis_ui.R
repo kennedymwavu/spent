@@ -12,7 +12,7 @@ analysis_ui <- function(id) {
       class = 'mycontainer',
       
       tags$div(
-        class = 'pt-2 pb-2 mb-5 fade-in', 
+        class = 'pt-3 pb-2 mb-5 fade-in', 
         
         bslib::card(
           class = 'border-white', 
@@ -78,7 +78,7 @@ analysis_ui <- function(id) {
       ), 
       
       tags$div(
-        class = 'pt-2 pb-2 mb-5 fade-in', 
+        class = 'pt-2 pb-2 mb-5', 
         
         bslib::card(
           class = 'border-white', 
@@ -86,6 +86,8 @@ analysis_ui <- function(id) {
           bslib::card_title('Item Stats'), 
           
           bslib::card_body_fill(
+            class = 'fade-in', 
+            
             tags$div(
               class = 'm-2', 
               
