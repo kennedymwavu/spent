@@ -66,7 +66,7 @@ analysis_ui <- function(id) {
                     ), 
                   
                   tags$div(
-                    class = 'text-muted mt-1', 
+                    class = 'text-muted mt-2', 
                     
                     paste0(
                       'Average per month: ', format_currency(avg_per_month)
