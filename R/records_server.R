@@ -19,9 +19,10 @@ records_server <- function(id) {
       observeEvent(f$get_signed_in(), {
         x <- f$get_signed_in()
         
-        if (identical(x$response$uid, Sys.getenv('my_uid'))) {
+        if (isTruthy(x$success)) {
           shinytoastr::toastr_success(
             message = 'Signed In!', 
+            position = 'bottom-center', 
             closeButton = TRUE, 
             progressBar = TRUE
           )
@@ -31,38 +32,6 @@ records_server <- function(id) {
             inputId = 'tab_set_panel', 
             selected = 'records'
           )
-          
-          # jump out of this observeEvent:
-          return(NULL)
-        }
-        
-        # otherwise, if the user is not me:
-        if (isTruthy(x$success)) {
-          shinytoastr::toastr_success(
-            message = 'Signed In!', 
-            closeButton = TRUE, 
-            progressBar = TRUE, 
-            timeOut = 1e5
-          )
-          
-          shinytoastr::toastr_warning(
-            title = 'Save permission denied!', 
-            message = paste0(
-              'There can be only one Lord of the Rings, only one who can bend ', 
-              'them to his will. And he does not share power!'
-            ), 
-            closeButton = TRUE, 
-            timeOut = 0
-          )
-          
-          updateTabsetPanel(
-            session = session, 
-            inputId = 'tab_set_panel', 
-            selected = 'records'
-          )
-          
-          # disable save btn:
-          shinyjs::disable(id = 'save')
           
           # jump out of this observeEvent:
           return(NULL)
@@ -280,7 +249,8 @@ records_server <- function(id) {
           )
           
           shinytoastr::toastr_info(
-            message = 'You have to be signed in to save any changes.'
+            message = 'You have to be signed in to save any changes.', 
+            position = 'bottom-center'
           )
           
           # jump out of this observeEvent:
@@ -319,12 +289,18 @@ records_server <- function(id) {
           isTruthy(x$success) && 
           !identical(x$response$uid, Sys.getenv('my_uid'))
         ) {
+          shinyFeedback::resetLoadingButton(
+            inputId = 'save', 
+            session = session
+          )
+          
           shinytoastr::toastr_warning(
             title = 'Save permission denied!', 
             message = paste0(
               'There can be only one Lord of the Rings, only one who can bend ', 
               'them to his will. And he does not share power!'
             ), 
+            position = 'bottom-center', 
             closeButton = TRUE, 
             timeOut = 0
           )

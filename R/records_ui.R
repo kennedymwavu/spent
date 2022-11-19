@@ -72,7 +72,7 @@ records_ui <- function(id) {
         value = 'sign_in', 
         
         tags$div(
-          class = 'mycontainer', 
+          class = 'mycontainer mt-5', 
           
           firebase::firebaseUIContainer()
         )
