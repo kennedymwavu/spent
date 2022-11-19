@@ -42,7 +42,7 @@ ui <- bslib::page(
     ), 
     
     tags$div(
-      class = 'container d-flex align-items-center justify-content-center', 
+      class = 'container', 
       
       tabsetPanel(
         id = 'tab_container', 
