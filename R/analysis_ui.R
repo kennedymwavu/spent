@@ -108,7 +108,7 @@ analysis_ui <- function(id) {
                     format_currency(most_expensive_item[, c(amount)])
                   ), 
                   full_screen = FALSE, 
-                  theme_color = 'primary'
+                  class = 'bg-danger bg-gradient'
                 ), 
                 
                 bslib::value_box(
@@ -123,7 +123,7 @@ analysis_ui <- function(id) {
                     paste0(most_bought_item[, c(freq)], ' Times')
                   ), 
                   full_screen = FALSE, 
-                  theme_color = 'success'
+                  class = 'bg-info'
                 )
               )
             ), 
@@ -209,7 +209,7 @@ analysis_ui <- function(id) {
                     )
                   ), 
                   full_screen = FALSE, 
-                  theme_color = 'primary'
+                  class = 'bg-primary'
                 ), 
                 
                 bslib::value_box(
@@ -224,7 +224,7 @@ analysis_ui <- function(id) {
                     'Usually after work'
                   ), 
                   full_screen = FALSE, 
-                  theme_color = 'success'
+                  class = 'bg-dark'
                 )
               )
             ), 

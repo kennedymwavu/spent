@@ -1,5 +1,5 @@
 ui <- bslib::page(
-  theme = bslib::bs_theme(version = 5, bootswatch = 'yeti'),
+  theme = bslib::bs_theme(version = 5, bootswatch = 'journal'),
   title = 'Spent', 
   
   shinyjs::useShinyjs(), 
@@ -33,11 +33,15 @@ ui <- bslib::page(
     class = 'div_container', 
     
     tags$div(
-      class = 'p-5 mb-1 bg-light', 
+      class = 'p-5 mb-1 bg-info bg-gradient', 
       
       tags$header(
         class = 'text-center', 
-        tags$h1('Home Expenditure')
+        
+        tags$h1(
+          class = 'display-5', 
+          'Home Expenditure'
+        )
       )
     ), 
     
@@ -51,7 +55,7 @@ ui <- bslib::page(
           title = 'Analysis', 
           value = 'analysis', 
           icon = tags$i(class = 'fa-solid fa-chart-simple'), 
-          class = 'p-3 border border-top-0 rounded-bottom', 
+          class = 'p-3 border-0 rounded-bottom', 
           
           analysis_ui(id = 'analysis')
         ), 
@@ -60,7 +64,7 @@ ui <- bslib::page(
           title = 'Records', 
           value = 'records', 
           icon = icon('table'), 
-          class = 'p-3 border border-top-0 rounded-bottom', 
+          class = 'p-3 border rounded-bottom', 
           
           records_ui(id = 'records')
         )
