@@ -19,6 +19,8 @@ records_ui <- function(id) {
           class = 'mycontainer', 
           
           bslib::card(
+            class = 'border-white', 
+            
             bslib::card_body_fill(
               tags$div(
                 class = 'container', 
