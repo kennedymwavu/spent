@@ -52,19 +52,25 @@ ui <- bslib::page(
         id = 'tab_container', 
         
         tabPanel(
-          title = 'Analysis', 
+          title = tags$span(
+            class = 'fs-5', 
+            
+            'Analysis'
+          ), 
           value = 'analysis', 
-          icon = tags$i(class = 'fa-solid fa-chart-simple'), 
-          class = 'p-3 border-0 rounded-bottom', 
+          class = 'p-3 border-0', 
           
           analysis_ui(id = 'analysis')
         ), 
         
         tabPanel(
-          title = 'Records', 
+          title = tags$span(
+            class = 'fs-5', 
+            
+            'Records'
+          ), 
           value = 'records', 
-          icon = icon('table'), 
-          class = 'p-3 border rounded-bottom', 
+          class = 'p-3 border', 
           
           records_ui(id = 'records')
         )
