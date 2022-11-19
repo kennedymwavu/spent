@@ -12,7 +12,7 @@ analysis_ui <- function(id) {
       class = 'mycontainer',
       
       tags$div(
-        class = 'pt-3 pb-2 mb-5 fade-in', 
+        class = 'pt-3 pb-2 mb-5', 
         
         bslib::card(
           class = 'border-white', 
@@ -63,12 +63,14 @@ analysis_ui <- function(id) {
                     shinycssloaders::withSpinner(
                       type = 2, 
                       color.background = 'white'
+                    ), 
+                  
+                  tags$div(
+                    class = 'text-muted mt-1', 
+                    
+                    paste0(
+                      'Average per month: ', format_currency(avg_per_month)
                     )
-                ), 
-                
-                bslib::card_footer(
-                  paste0(
-                    'Average per month: ', format_currency(avg_per_month)
                   )
                 )
               )
