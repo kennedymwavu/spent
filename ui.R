@@ -41,25 +41,29 @@ ui <- bslib::page(
       )
     ), 
     
-    tabsetPanel(
-      id = 'tab_container', 
+    tags$div(
+      class = 'container d-flex align-items-center justify-content-center', 
       
-      tabPanel(
-        title = 'Analysis', 
-        value = 'analysis', 
-        icon = tags$i(class = 'fa-solid fa-chart-simple'), 
-        class = 'p-3 border border-top-0 rounded-bottom', 
+      tabsetPanel(
+        id = 'tab_container', 
         
-        analysis_ui(id = 'analysis')
-      ), 
-      
-      tabPanel(
-        title = 'Records', 
-        value = 'records', 
-        icon = icon('table'), 
-        class = 'p-3 border border-top-0 rounded-bottom', 
+        tabPanel(
+          title = 'Analysis', 
+          value = 'analysis', 
+          icon = tags$i(class = 'fa-solid fa-chart-simple'), 
+          class = 'p-3 border border-top-0 rounded-bottom', 
+          
+          analysis_ui(id = 'analysis')
+        ), 
         
-        records_ui(id = 'records')
+        tabPanel(
+          title = 'Records', 
+          value = 'records', 
+          icon = icon('table'), 
+          class = 'p-3 border border-top-0 rounded-bottom', 
+          
+          records_ui(id = 'records')
+        )
       )
     ), 
     
