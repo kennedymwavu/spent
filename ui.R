@@ -70,7 +70,7 @@ ui <- bslib::page(
             'Records'
           ), 
           value = 'records', 
-          class = 'p-3 border', 
+          class = 'p-3 border-0', 
           
           records_ui(id = 'records')
         )
