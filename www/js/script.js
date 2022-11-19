@@ -29,4 +29,31 @@ shinyjs.init = function() {
   faders.forEach(fader => {
     appearOnScroll.observe(fader);
   })
+  
+  // scroll to top btn:
+  let btnScrollTop = document.getElementById('back_to_top');
+  
+  // when user scrolls 20px from top of document, show the btn:
+  window.onscroll = function() {
+    scrollFunction();
+  }
+  
+  function scrollFunction() {
+    if (
+      document.body.scrollTop > 20 || 
+      document.documentElement.scrollTop > 20
+    ) {
+      btnScrollTop.style.display = 'block';
+    }else {
+      btnScrollTop.style.display = 'none';
+    }
+  }
+  
+  // when user clicks on the btn, scroll to top of document:
+  btnScrollTop.addEventListener('click', backToTop);
+  
+  function backToTop() {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+  }
 }

@@ -67,6 +67,17 @@ ui <- bslib::page(
       )
     ), 
     
+    # scroll to top btn:
+    tags$button(
+      type = 'button', 
+      class = 'btn btn-outline-primary btn-lg rounded-circle', 
+      id = 'back_to_top', 
+      
+      tags$i(
+        class = 'fas fa-arrow-up'
+      )
+    ), 
+    
     # footer:
     footer(), 
     
