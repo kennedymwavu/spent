@@ -15,6 +15,8 @@ analysis_ui <- function(id) {
         class = 'pt-2 pb-2 mb-5 fade-in', 
         
         bslib::card(
+          class = 'border-white', 
+          
           bslib::card_title('Monthly stats'), 
           
           bslib::card_body_fill(
@@ -24,43 +26,27 @@ analysis_ui <- function(id) {
               bslib::layout_column_wrap(
                 width = '400px', 
                 
-                bslib::layout_column_wrap(
-                  width = 1, 
-                  
-                  bslib::value_box(
-                    title = 'Highest expenditure month',
-                    value = highest_spending_month[, format_currency(c(amount))],
-                    showcase = icon(name = 'up-long', class = 'fa-solid fa-up-long'), 
-                    showcase_layout = bslib::showcase_left_center(), 
-                    tags$p(highest_spending_month[, c(month)]), 
-                    full_screen = FALSE, 
-                    theme_color = 'info'
-                  ), 
-                  
-                  bslib::value_box(
-                    title = 'Least expenditure month',
-                    value = least_spending_month[, format_currency(c(amount))],
-                    showcase = icon(
-                      name = 'down-long', 
-                      class = 'down-solid fa-up-long'
-                    ), 
-                    showcase_layout = bslib::showcase_left_center(), 
-                    tags$p(least_spending_month[, c(month)]), 
-                    full_screen = FALSE, 
-                    theme_color = 'info'
-                  )
+                bslib::value_box(
+                  title = 'Highest expenditure month',
+                  value = highest_spending_month[, format_currency(c(amount))],
+                  showcase = icon(name = 'up-long', class = 'fa-solid fa-up-long'), 
+                  showcase_layout = bslib::showcase_left_center(), 
+                  tags$p(highest_spending_month[, c(month)]), 
+                  full_screen = FALSE, 
+                  theme_color = 'success'
                 ), 
                 
                 bslib::value_box(
-                  title = 'Average per month',
-                  value = format_currency(avg_per_month),
+                  title = 'Least expenditure month',
+                  value = least_spending_month[, format_currency(c(amount))],
                   showcase = icon(
-                    name = 'hand-holding-dollar', 
-                    class = 'fa-icon fa-hand-holding-dollar'
-                  ),
+                    name = 'down-long', 
+                    class = 'down-solid fa-up-long'
+                  ), 
                   showcase_layout = bslib::showcase_left_center(), 
+                  tags$p(least_spending_month[, c(month)]), 
                   full_screen = FALSE, 
-                  theme_color = 'success'
+                  theme_color = 'primary'
                 )
               )
             ), 
@@ -68,20 +54,21 @@ analysis_ui <- function(id) {
             tags$div(
               class = 'm-2', 
               
-              tags$div(
-                class = 'container', 
+              bslib::card(
+                bslib::card_body_fill(
+                  echarts4r::echarts4rOutput(
+                    outputId = ns(id = 'plt_amt_per_month'), 
+                    height = '500px'
+                  ) |> 
+                    shinycssloaders::withSpinner(
+                      type = 2, 
+                      color.background = 'white'
+                    )
+                ), 
                 
-                bslib::card(
-                  bslib::card_title('Amount per month'), 
-                  
-                  bslib::card_body_fill(
-                    echarts4r::echarts4rOutput(
-                      outputId = ns(id = 'plt_amt_per_month')
-                    ) |> 
-                      shinycssloaders::withSpinner(
-                        type = 2, 
-                        color.background = 'white'
-                      )
+                bslib::card_footer(
+                  paste0(
+                    'Average per month: ', format_currency(avg_per_month)
                   )
                 )
               )
@@ -94,6 +81,8 @@ analysis_ui <- function(id) {
         class = 'pt-2 pb-2 mb-5 fade-in', 
         
         bslib::card(
+          class = 'border-white', 
+          
           bslib::card_title('Item Stats'), 
           
           bslib::card_body_fill(
@@ -206,6 +195,8 @@ analysis_ui <- function(id) {
         class = 'pt-2 pb-2 mb-5 fade-in', 
         
         bslib::card(
+          class = 'border-white', 
+          
           bslib::card_title('Store and time stats'), 
           
           bslib::card_body_fill(
