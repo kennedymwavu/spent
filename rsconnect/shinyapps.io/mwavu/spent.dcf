@@ -1,0 +1,13 @@
+name: spent
+title: spent
+username:
+account: mwavu
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 7683083
+bundleId: 6534333
+url: https://mwavu.shinyapps.io/spent/
+when: 1668931480.16074
+lastSyncTime: 1668931480.16079
+asMultiple: FALSE
+asStatic: FALSE
