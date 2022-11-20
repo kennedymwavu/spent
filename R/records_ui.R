@@ -34,7 +34,7 @@ records_ui <- function(id) {
                     inputId = ns(id = 'add_row'),
                     label = 'Add Row',
                     icon = icon('plus'),
-                    class = 'btn-success'
+                    class = 'btn-success m-1'
                   ), 
                   
                   shinyjs::hidden(
@@ -46,7 +46,7 @@ records_ui <- function(id) {
                         label = 'Save Changes',
                         loadingLabel = 'Saving...',
                         loadingSpinner = 'sync',
-                        class = 'btn btn-info'
+                        class = 'btn btn-info m-1'
                       )
                     )
                   )
