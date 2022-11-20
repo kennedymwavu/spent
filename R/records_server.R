@@ -14,6 +14,8 @@ records_server <- function(id) {
         set_providers( # define providers
           email = TRUE
         )$
+        set_privacy_policy_url('https://github.com/kennedymwavu/spent')$
+        set_tos_url('https://github.com/kennedymwavu/spent')$
         launch() # launch
       
       observeEvent(f$get_signed_in(), {
