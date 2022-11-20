@@ -20,17 +20,17 @@ records_server <- function(id) {
         x <- f$get_signed_in()
         
         if (isTruthy(x$success)) {
+          updateTabsetPanel(
+            session = session, 
+            inputId = 'tab_set_panel', 
+            selected = 'records'
+          )
+          
           shinytoastr::toastr_success(
             message = 'Signed In!', 
             position = 'bottom-center', 
             closeButton = TRUE, 
             progressBar = TRUE
-          )
-          
-          updateTabsetPanel(
-            session = session, 
-            inputId = 'tab_set_panel', 
-            selected = 'records'
           )
           
           # jump out of this observeEvent:
@@ -52,6 +52,14 @@ records_server <- function(id) {
       },
       ignoreNULL = TRUE
       )
+      
+      observeEvent(input$back_to_records, {
+        updateTabsetPanel(
+          session = session, 
+          inputId = 'tab_set_panel', 
+          selected = 'records'
+        )
+      })
       
       rv_table <- reactiveValues(
         tbl = NULL, 

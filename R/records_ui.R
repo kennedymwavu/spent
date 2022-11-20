@@ -74,7 +74,17 @@ records_ui <- function(id) {
         tags$div(
           class = 'mycontainer mt-5', 
           
-          firebase::firebaseUIContainer()
+          firebase::firebaseUIContainer(), 
+          
+          actionButton(
+            inputId = ns(id = 'back_to_records'), 
+            label = NULL, 
+            class = 'btn btn-primary', 
+            icon = icon(
+              name = 'arrow-left-long', 
+              class = 'fa-solid fa-arrow-left-long'
+            )
+          )
         )
       )
     )
