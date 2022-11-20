@@ -259,7 +259,7 @@ records_server <- function(id) {
           )
           
           shinytoastr::toastr_info(
-            message = 'You have to be signed in to save any changes.', 
+            message = 'You have to be signed in to save changes.', 
             position = 'bottom-center'
           )
           
