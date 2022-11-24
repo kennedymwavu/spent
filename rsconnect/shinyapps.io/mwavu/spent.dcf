@@ -5,9 +5,9 @@ account: mwavu
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 7683083
-bundleId: 6534333
+bundleId: 6551738
 url: https://mwavu.shinyapps.io/spent/
-when: 1668931480.16074
-lastSyncTime: 1668931480.16079
+when: 1669316951.65341
+lastSyncTime: 1669316951.65348
 asMultiple: FALSE
 asStatic: FALSE
