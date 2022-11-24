@@ -39,7 +39,7 @@ ui <- bslib::page(
         class = 'text-center', 
         
         tags$h1(
-          class = 'display-5', 
+          style = 'font-size: 4rem;', 
           'Home Expenditure'
         )
       )
