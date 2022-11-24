@@ -69,7 +69,7 @@ analysis_server <- function(id, post_url) {
           order(-price), 
           .SD[seq_len(top_n_items())], 
           .SDcols = -c('datetime')
-        ][, list(item, amount, month)]
+        ][, list(item, price, month)]
       })
       
       output$top_most_expensive_items <- DT::renderDT({
@@ -99,7 +99,7 @@ analysis_server <- function(id, post_url) {
           )
         ) |> 
           DT::formatCurrency(
-            columns = c('amount'), 
+            columns = c('price'), 
             currency = ''
           )
       })
